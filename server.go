@@ -59,7 +59,7 @@ func addTLS(srv *http.Server) {
 	m := autocert.Manager{
 		Prompt:     autocert.AcceptTOS,
 		HostPolicy: hostPolicy,
-		Cache:      autocert.DirCache("."),
+		Cache:      autocert.DirCache("/miocerts"),
 	}
 
 	srv.TLSConfig = &tls.Config{GetCertificate: m.GetCertificate}

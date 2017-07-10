@@ -31,4 +31,4 @@ COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/blog/posts /go/sr
 
 ENV GO_MODE=production
 
-ENTRYPOINT ["./marwanio"]
+ENTRYPOINT ["/go/src/github.com/marwan-at-work/marwanio/marwanio"]
