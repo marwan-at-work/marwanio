@@ -42,10 +42,15 @@ func (pv *MainView) renderFooter() *vecty.HTML {
 				prop.Href("https://www.github.com/gopherjs/gopherjs"),
 				vecty.Text("GopherJS"),
 			),
+			vecty.Text(" - "),
+			elem.Anchor(
+				prop.Href("https://www.github.com/marwan-at-work/marwanio"),
+				vecty.Text("(source)"),
+			),
 		),
 		elem.Div(
 			vecty.UnsafeHTML(
-				"<span>It was alsoencrypted encrypt with love, I assume, by <a href=\"https://letsencrypt.org\">Let's Encrypt</a><span>",
+				"<span>It was also encrypted encrypt with love, I assume, by <a href=\"https://letsencrypt.org\">Let's Encrypt</a><span>",
 			),
 		),
 	)
