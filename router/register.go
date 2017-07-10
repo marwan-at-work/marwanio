@@ -22,5 +22,9 @@ func RegisterRoutes(mux *http.ServeMux) {
 		http.ServeFile(w, r, "./public/normalize.css")
 	})
 
+	mux.HandleFunc("/resume", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./resume.pdf")
+	})
+
 	mux.HandleFunc("/api/blog", blogHandler)
 }
