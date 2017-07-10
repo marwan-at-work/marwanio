@@ -29,6 +29,6 @@ COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/public /go/src/gi
 
 COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/blog/posts /go/src/github.com/marwan-at-work/marwanio/blog/posts
 
-ENV GO_MODE=development
+ENV GO_MODE=production
 
 ENTRYPOINT ["./marwanio"]
