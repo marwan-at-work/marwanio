@@ -47,7 +47,6 @@ func runRedirectServer() {
 
 func addTLS(srv *http.Server) {
 	hostPolicy := func(ctx context.Context, host string) error {
-		fmt.Println("host policy:", host)
 		allowedHost := "www.marwan.io"
 		if host != allowedHost {
 			return fmt.Errorf("acme/autocert: only %s host is allowed", allowedHost)

@@ -2,10 +2,10 @@
 
 
 [[projects]]
-  branch = "master"
   name = "github.com/PuerkitoBio/goquery"
   packages = ["."]
-  revision = "2dc93891ab3bcc1dbc2cbf9bc6376c37f6e6f289"
+  revision = "e1271ee34c6a305e38566ecd27ae374944907ee9"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
@@ -15,43 +15,55 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/gopherjs/gopherjs"
-  packages = ["js"]
-  revision = "2b1d432c8a82c9bff0b0baffaeb3ec6e92974112"
+  name = "github.com/cathalgarvey/fmtless"
+  packages = [".","encoding/json"]
+  revision = "5077ea9388910b75830078d274e1addafb53711f"
 
 [[projects]]
   branch = "master"
   name = "github.com/gopherjs/vecty"
   packages = [".","elem","event","prop"]
-  revision = "29e955f4adf9d30417880355935bd22d279f3cc1"
+  revision = "7d15bbeaa9172b71e239a83098d29ffc3b70590b"
 
 [[projects]]
   branch = "master"
   name = "github.com/marwan-at-work/vecty-router"
   packages = ["."]
-  revision = "2a50d35fc9676b9e81b8668e0e049e60c50a79d9"
+  revision = "b69cd322ac9e5c92d7c5caf2689154fd00ba6448"
 
 [[projects]]
   branch = "master"
   name = "github.com/russross/blackfriday"
   packages = ["."]
-  revision = "0ba0f2b6ed7c475a92e4df8641825cb7a11d1fa3"
+  revision = "067529f716f4c3f5e37c8c95ddd59df1007290ae"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["acme","acme/autocert"]
-  revision = "69be088f860613049aa58c65154d1b1d32bbdf90"
+  revision = "3627ff35f31987174dbee61d9d1dcc1c643e7174"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["html","html/atom"]
-  revision = "ddf80d0970594e2e4cccf5a98861cad3d9eaa4cd"
+  revision = "054b33e6527139ad5b1ec2f6232c3b175bd9a30c"
+
+[[projects]]
+  branch = "master"
+  name = "honnef.co/go/js/util"
+  packages = ["."]
+  revision = "96b8dd9d16214b6cd9d8c8e84b3a375da4688108"
+
+[[projects]]
+  branch = "master"
+  name = "honnef.co/go/js/xhr"
+  packages = ["."]
+  revision = "00e3346113aed89b501ead4e863c7c3d04fa0c5b"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "49fade913932c413bd0892969a52a5fc740b6d5c1d439a2bb7d0c96253e71624"
+  inputs-digest = "6bc6065a49081960b3b821ba14243c6635c6599f2787b4045002e0a2fed11500"
   solver-name = "gps-cdcl"
   solver-version = 1

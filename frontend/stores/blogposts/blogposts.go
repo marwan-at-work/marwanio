@@ -1,11 +1,11 @@
 package blogposts
 
 import (
-	"encoding/json"
 	"errors"
-	"net/http"
 
+	"github.com/cathalgarvey/fmtless/encoding/json"
 	"github.com/marwan-at-work/marwanio/blog"
+	"honnef.co/go/js/xhr"
 )
 
 var posts = []blog.Post{}
@@ -15,13 +15,12 @@ var ErrNotFound = errors.New("blog post was not found")
 
 // Fetch will populate all blog posts from the server.
 func Fetch() error {
-	resp, err := http.Get("/api/blog")
+	bts, err := xhr.Send("GET", "/api/blog", nil)
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
 
-	return json.NewDecoder(resp.Body).Decode(&posts)
+	return json.Unmarshal(bts, &posts)
 }
 
 // GetAll returns a copy of all blog posts

@@ -8,7 +8,7 @@ COPY . /go/src/github.com/marwan-at-work/marwanio
 WORKDIR /go/src/github.com/marwan-at-work/marwanio
 
 RUN CGO_ENABLED=0 go build -a -ldflags '-s' && \
-    cd /go/src/github.com/marwan-at-work/marwanio && \
+    cd /go/src/github.com/marwan-at-work/marwanio/frontend && \
     gopherjs build .
 
 FROM busybox
