@@ -3,9 +3,10 @@ package blogposts
 import (
 	"errors"
 
+	"honnef.co/go/js/xhr"
+
 	"github.com/cathalgarvey/fmtless/encoding/json"
 	"github.com/marwan-at-work/marwanio/blog"
-	"honnef.co/go/js/xhr"
 )
 
 var posts = []blog.Post{}

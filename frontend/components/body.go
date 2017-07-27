@@ -14,8 +14,8 @@ type Body struct {
 // Render renders the <body> tag with the App as its children
 func (b *Body) Render() *vecty.HTML {
 	return elem.Body(
-		router.NewRoute("/", &MainView{}),
-		router.NewRoute("/blog", &BlogView{}),
-		router.NewRoute("/blog/{id}", &PostView{}),
+		router.NewRoute("/", &MainView{}, router.NewRouteOpts{ExactMatch: true}),
+		router.NewRoute("/blog", &BlogView{}, router.NewRouteOpts{ExactMatch: true}),
+		router.NewRoute("/blog/{id}", &PostView{}, router.NewRouteOpts{ExactMatch: true}),
 	)
 }

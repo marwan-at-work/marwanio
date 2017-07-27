@@ -21,6 +21,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/gopherjs/gopherjs"
+  packages = ["js"]
+  revision = "2b1d432c8a82c9bff0b0baffaeb3ec6e92974112"
+
+[[projects]]
+  branch = "master"
   name = "github.com/gopherjs/vecty"
   packages = [".","elem","event","prop"]
   revision = "7d15bbeaa9172b71e239a83098d29ffc3b70590b"
@@ -29,25 +35,31 @@
   branch = "master"
   name = "github.com/marwan-at-work/vecty-router"
   packages = ["."]
-  revision = "b69cd322ac9e5c92d7c5caf2689154fd00ba6448"
+  revision = "f872b081f3e0543cdc4cd94447959eb9f1bca98f"
+
+[[projects]]
+  name = "github.com/russross/blackfriday"
+  packages = ["."]
+  revision = "0b647d0506a698cca42caca173e55559b12a69f2"
+  version = "v1.4"
 
 [[projects]]
   branch = "master"
-  name = "github.com/russross/blackfriday"
+  name = "github.com/shurcooL/sanitized_anchor_name"
   packages = ["."]
-  revision = "067529f716f4c3f5e37c8c95ddd59df1007290ae"
+  revision = "541ff5ee47f1dddf6a5281af78307d921524bcb5"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["acme","acme/autocert"]
-  revision = "3627ff35f31987174dbee61d9d1dcc1c643e7174"
+  revision = "2faea1465de239e4babd8f5905cc25b781712442"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["html","html/atom"]
-  revision = "054b33e6527139ad5b1ec2f6232c3b175bd9a30c"
+  revision = "f5079bd7f6f74e23c4d65efa0f4ce14cbd6a3c0f"
 
 [[projects]]
   branch = "master"
@@ -64,6 +76,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6bc6065a49081960b3b821ba14243c6635c6599f2787b4045002e0a2fed11500"
+  inputs-digest = "3ecfb1f743c106dd9307577a0190326b40ba3a6eb38f19844e1f213a1cfcc175"
   solver-name = "gps-cdcl"
   solver-version = 1
