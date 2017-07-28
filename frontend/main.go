@@ -10,7 +10,8 @@ func main() {
 	must(blogposts.Fetch())
 	vecty.SetTitle("Marwan - Software Engineer")
 	vecty.AddStylesheet("/public/css")
-	vecty.RenderBody(&components.Body{})
+	body := &components.Body{}
+	vecty.RenderBody(body)
 }
 
 func must(err error) {

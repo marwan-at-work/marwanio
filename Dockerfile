@@ -1,7 +1,19 @@
 FROM golang:1.8.3 AS builder
 
-RUN mkdir -p /go/src/github.com/marwan-at-work/marwanio && \
-    go get -u github.com/gopherjs/gopherjs
+RUN mkdir -p /go/src/github.com/marwan-at-work/marwanio/frontend && \
+    go get -u github.com/gopherjs/gopherjs && \
+    mkdir -p /tmp/cache && \
+    apt-get update && \
+    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+    apt-get install -y nodejs && \
+    npm i -g webpack
+
+COPY ./frontend/package.json /tmp/cache
+COPY ./frontend/package-lock.json /tmp/cache
+
+RUN cd /tmp/cache && npm i
+
+RUN cp -a /tmp/cache/node_modules /go/src/github.com/marwan-at-work/marwanio/frontend
 
 COPY . /go/src/github.com/marwan-at-work/marwanio
 
@@ -9,6 +21,7 @@ WORKDIR /go/src/github.com/marwan-at-work/marwanio
 
 RUN CGO_ENABLED=0 go build -a -ldflags '-s' && \
     cd /go/src/github.com/marwan-at-work/marwanio/frontend && \
+    webpack && \
     gopherjs build .
 
 FROM busybox

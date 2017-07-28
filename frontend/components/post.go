@@ -4,9 +4,9 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/prop"
+	"github.com/marwan-at-work/marwanio/frontend/js-wrappers/marked"
 	"github.com/marwan-at-work/marwanio/frontend/stores/blogposts"
 	"github.com/marwan-at-work/vecty-router"
-	"github.com/russross/blackfriday"
 )
 
 // PostView represents a post
@@ -23,11 +23,11 @@ func (pv *PostView) Render() *vecty.HTML {
 		return pv.renderErr()
 	}
 
-	output := blackfriday.MarkdownCommon(p.Markdown)
+	output := marked.Marked(p.Markdown)
 
 	return elem.Div(
 		prop.Class("blogpost-container"),
-		vecty.UnsafeHTML(string(output)),
+		vecty.UnsafeHTML(output),
 	)
 }
 

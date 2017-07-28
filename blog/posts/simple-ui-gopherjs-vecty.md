@@ -14,8 +14,6 @@ The documentation in Vecty, as of writng date, is almost non-existent, but they 
 To render a component to the DOM you must first render the `<body>` tag.
 To do so, run the following line in your main function:
 
---------
-
 ```go
 package main
 
@@ -26,13 +24,10 @@ func main() {
 }
 ```
 
--------
-
 Note that `MyComponent` must render a Body element. 
 
 Let's get to the React-like `Components` part. You can define a component by embedding `vecty.Core` into a struct. 
 
--------
 
 ```go
     type MyComponent struct {
@@ -40,11 +35,7 @@ Let's get to the React-like `Components` part. You can define a component by emb
     }
 ```
 
--------
-
 The next thing you need to do is define a `Render` method that returns `*vecty.HTML`. In our `MyComponent` case, it must return a Body element. Other child components can return any element they want. 
-
--------
 
 ``` go
 import (
@@ -60,8 +51,6 @@ func (mc *MyComponent) Render() *vecty.HTML {
 }
 ```
 
--------
-
 ### So how does the render method work? 
 
 A Component's render method must return a `*vecty.HTML`. Think of it as a component that must return a DOM element. Afterall, you're coding a web page. This is where the `elem` package comes in. It gives you access to all DOM elements, such as the `<body>` tag above.
@@ -74,8 +63,6 @@ What this type says is that we can safely pass `Markup`, which we will get to in
 
 Finally let's look at what `MyChildComponent` renders:
 
--------
-
 ``` go
 import "github.com/gopherjs/vecty/prop"
 
@@ -86,8 +73,6 @@ func (mc *MyComponent) Render() *vecty.HTML {
     )
 }    
 ```
-
--------
 
 Notice that the child Component is fundamentally the same as the parent Component. I just took the liberty here to introduce you to the `Markup` part aka the `prop.Class("my-main-container")` part. The `prop` package let's you pass element attributes to your HTML such ass Class, ID, href, etc. 
 
