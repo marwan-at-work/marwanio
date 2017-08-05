@@ -34,7 +34,7 @@ good bye
 
 Okay, we're half way there! Sorta. 
 
-A node module library out of the box will not work this way.
+A node module out of the box will not work this way.
 The reason is that a node module has browser-incompatible syntax, specifically imports/exports. 
 
 Therefore, you will need a tool such as Browserify or Webpack to take a Node.js module and turn it into a browser-friendly script. In this case, I will use Webpack. 
@@ -74,7 +74,7 @@ Webpack has a very large ecosystem for optimizations, so feel free to go nuts he
 
 Run `webpack` -- of course if you don't have it: `npm i -g webpack`
 
-And voila! Your newly installed npm library is now accessible globally. All you need to do is writer a Go wrapper package. Let's create one. 
+And voila! Your newly installed npm library is now accessible globally. All you need to do is write a Go wrapper package. Let's create one. 
 
 Create a new directory in `gophermodules` called `is-primitive` and add the following file
 
