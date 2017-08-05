@@ -104,7 +104,7 @@ Furthermore, one complaint I have for languages that compile to JavaScript is So
 
 All of that being said, I do think once you try GopherJS & Vecty, you will get optimistic very quickly.
 
-Go by default solves a lot of JavaScript's limitations: static analysis, concurrency, dependencies, editor-tools and more. What iss currently missing is essential UI-scalablity tools similar to Webpack's eco-system: chunking, progressive-loading, CSS processing, cached builds...etc.
+Go by default solves a lot of JavaScript's limitations: static analysis, concurrency, dependencies, editor-tools and more. What is currently missing is essential UI-scalablity tools similar to Webpack's eco-system: chunking, progressive-loading, CSS processing, cached builds...etc.
 
 In my experience, these tools are vital for building scalable User Interfaces like the ones we build at [work & co](www.work.co/clients). Therefore, once those tools are introduced to the GopherJS ecosystem, the combination of these tools with what Go offers will make a very compelling case for building heavy-duty UIs.
 
