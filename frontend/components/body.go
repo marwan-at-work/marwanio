@@ -17,5 +17,6 @@ func (b *Body) Render() *vecty.HTML {
 		router.NewRoute("/", &MainView{}, router.NewRouteOpts{ExactMatch: true}),
 		router.NewRoute("/blog", &BlogView{}, router.NewRouteOpts{ExactMatch: true}),
 		router.NewRoute("/blog/{id}", &PostView{}, router.NewRouteOpts{ExactMatch: true}),
+		router.NewRoute("/talks", &Talks{}, router.NewRouteOpts{ExactMatch: true}),
 	)
 }

@@ -22,7 +22,7 @@ WORKDIR /go/src/github.com/marwan-at-work/marwanio
 RUN CGO_ENABLED=0 go build -a -ldflags '-s' && \
     cd /go/src/github.com/marwan-at-work/marwanio/frontend && \
     webpack && \
-    gopherjs build .
+    gopherjs build github.com/marwan-at-work/marwanio/frontend -o ../public/frontend.js
 
 FROM busybox
 

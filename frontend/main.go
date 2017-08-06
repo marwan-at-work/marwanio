@@ -9,7 +9,6 @@ import (
 func main() {
 	must(blogposts.Fetch())
 	vecty.SetTitle("Marwan - Software Engineer")
-	vecty.AddStylesheet("/public/css")
 	body := &components.Body{}
 	vecty.RenderBody(body)
 }

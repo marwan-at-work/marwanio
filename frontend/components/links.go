@@ -31,5 +31,12 @@ func (l *Links) Render() *vecty.HTML {
 			Name: "RESUME",
 			Link: "/resume",
 		},
+		router.Link(
+			"/talks",
+			"TALKS",
+			router.LinkOptions{
+				Class: "link",
+			},
+		),
 	)
 }
