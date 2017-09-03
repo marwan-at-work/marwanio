@@ -74,7 +74,7 @@ func (mc *MyComponent) Render() *vecty.HTML {
 }    
 ```
 
-Notice that the child Component is fundamentally the same as the parent Component. I just took the liberty here to introduce you to the `Markup` part aka the `vecty.Markup(prop.Class("my-main-container"))` part. The `prop` package let's you pass element attributes to your HTML such ass Class, ID, href, etc. 
+Notice that the child Component is fundamentally the same as the parent Component. I just took the liberty here to introduce you to the `Markup` part aka the `vecty.Markup(prop.Class("my-main-container"))` part. The `prop` package let's you pass element attributes to your HTML such as Class, ID, href, etc. 
 
 ### Running On The Browser
 
