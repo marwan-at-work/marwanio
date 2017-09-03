@@ -20,7 +20,7 @@ func (b *BlogView) Render() *vecty.HTML {
 	return elem.Div(
 		prop.ID("blog-container"),
 		b.renderHeading(),
-		vecty.List(b.getTitles()),
+		b.getTitles(),
 	)
 }
 
@@ -31,8 +31,8 @@ func (b *BlogView) renderHeading() *vecty.HTML {
 	)
 }
 
-func (b *BlogView) getTitles() []vecty.ComponentOrHTML {
-	ts := []vecty.ComponentOrHTML{}
+func (b *BlogView) getTitles() vecty.List {
+	var ts vecty.List
 	posts := blogposts.GetAll()
 	for _, p := range posts {
 		ts = append(ts, b.renderPostTitle(p))
