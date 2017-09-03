@@ -57,7 +57,7 @@ A Component's render method must return a `*vecty.HTML`. Think of it as a compon
 
 ### What's going on inside the `elem.Body` function? 
 
-If you hover over `elem.Body`, or any other element, you'll notice that it takes a variadic argument of `vecty.MarkupOrComponentOrHTML`. This is an empty interface that panics if you pass it the wrong interface, so don't rely on static typing here.
+If you hover over `elem.Body`, or any other element, you'll notice that it takes a variadic argument of `vecty.MarkupOrChild`. This is an empty interface that panics if you pass it the wrong interface, so don't rely on static typing here.
 
 What this type says is that we can safely pass `Markup`, which we will get to in a second, or `Component`, i.e. `MyChildComponent`, or `HTML` which can be other html elements such as `elem.Div()`, `elem.Span()`, or `vecty.Text()`, as arugments. 
 
