@@ -31,8 +31,8 @@ func (b *BlogView) renderHeading() *vecty.HTML {
 	)
 }
 
-func (b *BlogView) getTitles() []vecty.MarkupOrComponentOrHTML {
-	ts := []vecty.MarkupOrComponentOrHTML{}
+func (b *BlogView) getTitles() []vecty.ComponentOrHTML {
+	ts := []vecty.ComponentOrHTML{}
 	posts := blogposts.GetAll()
 	for _, p := range posts {
 		ts = append(ts, b.renderPostTitle(p))
@@ -41,7 +41,7 @@ func (b *BlogView) getTitles() []vecty.MarkupOrComponentOrHTML {
 	return ts
 }
 
-func (b *BlogView) renderPostTitle(p blog.Post) vecty.MarkupOrComponentOrHTML {
+func (b *BlogView) renderPostTitle(p blog.Post) vecty.ComponentOrHTML {
 	return elem.Paragraph(
 		prop.Class("post-title"),
 		elem.Span(
