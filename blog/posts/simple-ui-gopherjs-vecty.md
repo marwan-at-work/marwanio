@@ -7,7 +7,7 @@ I recently started playing with [GopherJS](https://github.com/gopherjs/gopherjs)
 
 Vecty, on the other hand, is a React-like library that lets you write UI applications in Go. This will be my focus in this post.
 
-The documentation in Vecty, as of writng date, is almost non-existent, but they have built a couple of [example applications](https://github.com/gopherjs/vecty/tree/master/examples) to play with in order for you to learn how to use Vecty.
+The documentation in Vecty, as of writing date, is almost non-existent, but they have built a couple of [example applications](https://github.com/gopherjs/vecty/tree/master/examples) to play with in order for you to learn how to use Vecty.
 
 ## Getting Started
 
