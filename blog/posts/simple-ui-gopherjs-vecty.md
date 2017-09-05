@@ -7,7 +7,7 @@ I recently started playing with [GopherJS](https://github.com/gopherjs/gopherjs)
 
 Vecty, on the other hand, is a React-like library that lets you write UI applications in Go. This will be my focus in this post.
 
-The documentation in Vecty, as of writng date, is almost non-existent, but they have built a couple of [example applications](https://github.com/gopherjs/vecty/tree/master/examples) to play with in order for you to learn how to use Vecty.
+The documentation in Vecty, as of writing date, is almost non-existent, but they have built a couple of [example applications](https://github.com/gopherjs/vecty/tree/master/examples) to play with in order for you to learn how to use Vecty.
 
 ## Getting Started
 
@@ -57,9 +57,9 @@ A Component's render method must return a `*vecty.HTML`. Think of it as a compon
 
 ### What's going on inside the `elem.Body` function? 
 
-If you hover over `elem.Body`, or any other element, you'll notice that it takes a variadic argument of `vecty.MarkupOrComponentOrHTML`. This is an empty interface that panics if you pass it the wrong interface, so don't rely on static typing here.
+If you hover over `elem.Body`, or any other element, you'll notice that it takes a variadic argument of `vecty.MarkupOrChild`. This is an empty interface that panics if you pass it the wrong interface, so don't rely on static typing here.
 
-What this type says is that we can safely pass `Markup`, which we will get to in a second, or `Component`, i.e. `MyChildComponent`, or `HTML` which can be other html elements such as `elem.Div()`, `elem.Span()`, or `vecty.Text()`, as arugments. 
+What this type says is that we can safely pass `Markup`, which we will get to in a second, or `Component`, i.e. `MyChildComponent`, or `HTML` which can be other html elements such as `elem.Div()`, `elem.Span()`, or `vecty.Text()`, as arguments. 
 
 Finally let's look at what `MyChildComponent` renders:
 
@@ -68,13 +68,13 @@ import "github.com/gopherjs/vecty/prop"
 
 func (mc *MyComponent) Render() *vecty.HTML {
     return elem.Div(
-        prop.Class("my-main-container"),
+        vecty.Markup(prop.Class("my-main-container")),
         vecty.Text("Welcome to my site"),
     )
 }    
 ```
 
-Notice that the child Component is fundamentally the same as the parent Component. I just took the liberty here to introduce you to the `Markup` part aka the `prop.Class("my-main-container")` part. The `prop` package let's you pass element attributes to your HTML such ass Class, ID, href, etc. 
+Notice that the child Component is fundamentally the same as the parent Component. I just took the liberty here to introduce you to the `Markup` part aka the `vecty.Markup(prop.Class("my-main-container"))` part. The `prop` package let's you pass element attributes to your HTML such as Class, ID, href, etc. 
 
 ### Running On The Browser
 
