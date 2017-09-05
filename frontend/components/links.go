@@ -15,7 +15,7 @@ type Links struct {
 // Render renders Footer
 func (l *Links) Render() *vecty.HTML {
 	return elem.Paragraph(
-		prop.ID("links-container"),
+		vecty.Markup(prop.ID("links-container")),
 		&Link{
 			Name: "GITHUB",
 			Link: "https://www.github.com/marwan-at-work",

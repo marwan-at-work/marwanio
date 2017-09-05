@@ -14,7 +14,7 @@ type NameAndTitleView struct {
 // Render renders the name in the middle of the screen.
 func (h *NameAndTitleView) Render() *vecty.HTML {
 	return elem.Heading1(
-		prop.ID("name-and-title"),
+		vecty.Markup(prop.ID("name-and-title")),
 		vecty.Text("Marwan Sulaiman - Software Developer"),
 	)
 }

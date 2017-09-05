@@ -26,8 +26,10 @@ func (pv *PostView) Render() *vecty.HTML {
 	output := marked.Marked(p.Markdown)
 
 	return elem.Div(
-		prop.Class("blogpost-container"),
-		vecty.UnsafeHTML(output),
+		vecty.Markup(
+			prop.Class("blogpost-container"),
+			vecty.UnsafeHTML(output),
+		),
 	)
 }
 
