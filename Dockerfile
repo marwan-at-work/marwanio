@@ -1,4 +1,4 @@
-FROM golang:1.8.3 AS builder
+FROM golang:1.9 AS builder
 
 RUN mkdir -p /go/src/github.com/marwan-at-work/marwanio/frontend && \
     go get -u github.com/gopherjs/gopherjs && \
