@@ -21,12 +21,6 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/gopherjs/gopherjs"
-  packages = ["js"]
-  revision = "c7ececa347f7ef5d8542ac56c0edc26728f3b254"
-
-[[projects]]
-  branch = "master"
   name = "github.com/gopherjs/vecty"
   packages = [".","elem","event","prop"]
   revision = "657d4511d36ed357f891b69fc7219c70acf1b613"
@@ -70,6 +64,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f2ca46c8a2cbbb2bc740ad8ac2f76def10ce89ebcd9af841c1f253dd66e6df7f"
+  inputs-digest = "d78bae3279df781784366381bb5dc6498e6da19a0bb93a06ec5e1a84caedf127"
   solver-name = "gps-cdcl"
   solver-version = 1
