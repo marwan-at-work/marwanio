@@ -33,6 +33,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/marwan-at-work/sourcemapper"
+  packages = ["."]
+  revision = "bf5d24d3982852562553207a25bfde786c5f3971"
+
+[[projects]]
+  branch = "master"
   name = "github.com/marwan-at-work/vecty-router"
   packages = ["."]
   revision = "0407dcb5b5f985090f5a1e3418513a1ca6570d06"
@@ -64,6 +70,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "cfc5c7d7f7010cc344335ffbe7935cedff713ff98344e9724166839634905ec2"
+  inputs-digest = "f2ca46c8a2cbbb2bc740ad8ac2f76def10ce89ebcd9af841c1f253dd66e6df7f"
   solver-name = "gps-cdcl"
   solver-version = 1

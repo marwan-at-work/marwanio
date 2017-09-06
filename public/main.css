@@ -76,7 +76,7 @@ body {
 }
 
 .blogpost-container {
-    width: 70vw;
+    width: 50vw;
     margin: 40px auto;
 }
 /*
@@ -158,4 +158,9 @@ based on dark.css by Ivan Sagalaev
 
 .hljs-strong {
   font-weight: bold;
+}
+
+.twitter-footer {
+  padding-top: 20px;
+  border-top: 1px dashed darkgrey;
 }

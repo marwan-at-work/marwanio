@@ -30,11 +30,23 @@ func (pv *PostView) Render() *vecty.HTML {
 			prop.Class("blogpost-container"),
 			vecty.UnsafeHTML(output),
 		),
+		pv.renderFooter(),
 	)
 }
 
 func (pv *PostView) renderErr() *vecty.HTML {
 	return elem.Div(
 		vecty.Text("not found"),
+	)
+}
+
+func (pv *PostView) renderFooter() *vecty.HTML {
+	return elem.Div(
+		vecty.Markup(
+			prop.Class("twitter-footer"),
+			vecty.UnsafeHTML(
+				`<div>Follow me on <a href="https://www.twitter.com/MarwanSulaiman">Twitter</a> for updates and stuff.</div>`,
+			),
+		),
 	)
 }

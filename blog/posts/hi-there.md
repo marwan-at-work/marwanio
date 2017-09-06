@@ -12,5 +12,3 @@ Whenever I need a break, I will probably come here and write about stuff that I'
 The first thing I'd like to write about is [GopherJS](https://github.com/gopherjs/gopherjs) & [Vecty](https://github.com/gopherjs/vecty), which is what I built this design-lacking website on.
 
 Then I might take you on a tour of [Baghdad](https://www.github.com/marwan-at-work/baghdad), a distributed CI that I recently built. 
-
-Feel free to follow me on [twitter](https://twitter.com/MarwanSulaiman) @MarwanSulaiman to get notified on new posts : ) 

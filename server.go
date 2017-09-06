@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/marwan-at-work/marwanio/router"
+	"github.com/marwan-at-work/sourcemapper"
 	"golang.org/x/crypto/acme/autocert"
 )
 
@@ -20,6 +21,7 @@ const (
 func getServer(goMode string) *http.Server {
 	port := resolvePort(goMode)
 	mux := getMux()
+
 	srv := &http.Server{
 		Addr:         port,
 		ReadTimeout:  5 * time.Second,
@@ -31,6 +33,8 @@ func getServer(goMode string) *http.Server {
 	if goMode == production {
 		addTLS(srv)
 		go runRedirectServer()
+	} else {
+		srv.Handler = sourcemapper.NewHandler(mux)
 	}
 
 	return srv
