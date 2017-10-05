@@ -23,31 +23,31 @@
   branch = "master"
   name = "github.com/gopherjs/vecty"
   packages = [".","elem","event","prop"]
-  revision = "657d4511d36ed357f891b69fc7219c70acf1b613"
+  revision = "2748005658f43a521d01478e5b44c0fc3a20c4ac"
 
 [[projects]]
   branch = "master"
   name = "github.com/marwan-at-work/sourcemapper"
   packages = ["."]
-  revision = "bf5d24d3982852562553207a25bfde786c5f3971"
+  revision = "261492b104b391119ea508bae651491932257f36"
 
 [[projects]]
   branch = "master"
   name = "github.com/marwan-at-work/vecty-router"
   packages = ["."]
-  revision = "0407dcb5b5f985090f5a1e3418513a1ca6570d06"
+  revision = "b18b6865f7b6188eb530649a0b8149ecfcf24316"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["acme","acme/autocert"]
-  revision = "81e90905daefcd6fd217b62423c0908922eadb30"
+  revision = "9419663f5a44be8b34ca85f08abc5fe1be11f8a3"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["html","html/atom"]
-  revision = "66aacef3dd8a676686c7ae3716979581e8b03c47"
+  revision = "a04bdaca5b32abe1c069418fb7088ae607de5bd0"
 
 [[projects]]
   branch = "master"

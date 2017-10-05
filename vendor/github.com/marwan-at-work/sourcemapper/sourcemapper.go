@@ -1,6 +1,33 @@
+/*
+Package sourcemapper exposes an `http.Handler` that serves any `.go`
+files that exist in your GOPATH or GOROOT.  The purpose of this package
+is to implement `.go` source maps for GopherJS by using your own custom
+server without having to run `gopherjs serve`.
+
+Example
+
+	package main
+
+	import (
+		"net/http"
+
+		"path/to/sourcemapper"
+	)
+
+	func main() {
+		http.Handle("/one", myHandler)
+		http.Handle("/two", myOtherHandler)
+
+		http.ListenAndServe(port, sourcemapper.NewHandler(http.DefaultServeMux))
+	}
+
+If you pass nil to sourcemapper.NewHandler, http.DefaultServeMux is used by default.
+However, you can use this to pass your own router.
+*/
 package sourcemapper
 
 import (
+	"fmt"
 	"go/build"
 	"io"
 	"net/http"
@@ -18,6 +45,10 @@ type handler struct {
 // If .go is at the end of a URL string, then it will try to find that file for you
 // in your system and serve it back.
 func NewHandler(h http.Handler) http.Handler {
+	if h == nil {
+		h = http.DefaultServeMux
+	}
+
 	return &handler{h}
 }
 
@@ -44,6 +75,7 @@ func (h *handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	f, err := os.Open(fullPath)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "could not open %v: %v", fileName, err)
 		return
 	}
 

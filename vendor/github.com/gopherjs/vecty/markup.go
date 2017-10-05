@@ -1,8 +1,7 @@
 package vecty
 
 import (
-	"fmt"
-	"strings"
+	"reflect"
 
 	"github.com/gopherjs/gopherjs/js"
 )
@@ -50,6 +49,7 @@ type Event struct {
 //  Component
 //  *HTML
 //  List
+//  KeyedList
 //  nil
 //  MarkupList
 //
@@ -61,16 +61,10 @@ func apply(m MarkupOrChild, h *HTML) {
 	switch m := m.(type) {
 	case MarkupList:
 		m.Apply(h)
-	case *HTML:
-		if m == nil {
-			h.children = append(h.children, nil)
-			return
-		}
-		h.children = append(h.children, m)
-	case Component, List, nil:
+	case Component, *HTML, List, KeyedList, nil:
 		h.children = append(h.children, m)
 	default:
-		panic(fmt.Sprintf("vecty: invalid type %T does not match MarkupOrChild interface", m))
+		panic("vecty: invalid type " + reflect.TypeOf(m).String() + " does not match MarkupOrChild interface")
 	}
 }
 
@@ -85,7 +79,7 @@ type markupFunc func(h *HTML)
 
 func (m markupFunc) Apply(h *HTML) { m(h) }
 
-// Style returns Applyer which applies the given CSS style. Generally, this
+// Style returns an Applyer which applies the given CSS style. Generally, this
 // function is not used directly but rather the style subpackage (which is type
 // safe) should be used instead.
 func Style(key, value string) Applyer {
@@ -97,7 +91,16 @@ func Style(key, value string) Applyer {
 	})
 }
 
-// Property returns Applyer which applies the given JavaScript property to an
+// Key returns an Applyer that uniquely identifies the HTML element amongst its
+// siblings. When used, all other sibling elements and components must also be
+// keyed.
+func Key(key interface{}) Applyer {
+	return markupFunc(func(h *HTML) {
+		h.key = key
+	})
+}
+
+// Property returns an Applyer which applies the given JavaScript property to an
 // HTML element or text node. Generally, this function is not used directly but
 // rather the prop and style subpackages (which are type safe) should be used instead.
 //
@@ -114,7 +117,7 @@ func Property(key string, value interface{}) Applyer {
 	})
 }
 
-// Attribute returns Applyer which applies the given attribute to an element.
+// Attribute returns an Applyer which applies the given attribute to an element.
 //
 // In most situations, you should use Property function, or the prop subpackage
 // (which is type-safe) instead. There are only a few attributes (aria-*, role,
@@ -129,7 +132,7 @@ func Attribute(key string, value interface{}) Applyer {
 	})
 }
 
-// Data returns Applyer which applies the given data attribute.
+// Data returns an Applyer which applies the given data attribute.
 func Data(key, value string) Applyer {
 	return markupFunc(func(h *HTML) {
 		if h.dataset == nil {
@@ -151,7 +154,7 @@ func (m ClassMap) Apply(h *HTML) {
 			classes = append(classes, name)
 		}
 	}
-	Property("className", strings.Join(classes, " ")).Apply(h)
+	Property("className", join(classes, " ")).Apply(h)
 }
 
 // MarkupList represents a list of Applyer which is individually
@@ -225,4 +228,34 @@ func Namespace(uri string) Applyer {
 	return markupFunc(func(h *HTML) {
 		h.namespace = uri
 	})
+}
+
+// join is extracted from the stdlib `strings` package
+func join(a []string, sep string) string {
+	switch len(a) {
+	case 0:
+		return ""
+	case 1:
+		return a[0]
+	case 2:
+		// Special case for common small values.
+		// Remove if golang.org/issue/6714 is fixed
+		return a[0] + sep + a[1]
+	case 3:
+		// Special case for common small values.
+		// Remove if golang.org/issue/6714 is fixed
+		return a[0] + sep + a[1] + sep + a[2]
+	}
+	n := len(sep) * (len(a) - 1)
+	for i := 0; i < len(a); i++ {
+		n += len(a[i])
+	}
+
+	b := make([]byte, n)
+	bp := copy(b, a[0])
+	for _, s := range a[1:] {
+		bp += copy(b[bp:], sep)
+		bp += copy(b[bp:], s)
+	}
+	return string(b)
 }
