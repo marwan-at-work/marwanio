@@ -18,7 +18,7 @@ func (fl *Link) Render() *vecty.HTML {
 	if fl.Link != "" {
 		return elem.Anchor(
 			vecty.Markup(
-				prop.Class("footer-link"),
+				prop.Class("link footer-link"),
 				prop.Href(fl.Link),
 			),
 			vecty.Text(fl.Name),
