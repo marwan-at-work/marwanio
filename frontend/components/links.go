@@ -27,10 +27,10 @@ func (l *Links) Render() *vecty.HTML {
 				Class: "link",
 			},
 		),
-		&Link{
-			Name: "RESUME",
-			Link: "/resume",
-		},
+		// &Link{
+		// 	Name: "RESUME",
+		// 	Link: "/resume",
+		// },
 		router.Link(
 			"/talks",
 			"TALKS",
