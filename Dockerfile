@@ -1,4 +1,4 @@
-FROM golang:1.9 AS builder
+FROM golang:1.9.1 AS builder
 
 RUN mkdir -p /go/src/github.com/marwan-at-work/marwanio/frontend && \
     go get -u github.com/gopherjs/gopherjs && \
@@ -37,6 +37,8 @@ COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/marwanio /go/src/
 COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/public /go/src/github.com/marwan-at-work/marwanio/public
 
 COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/blog/posts /go/src/github.com/marwan-at-work/marwanio/blog/posts
+
+COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 
 ENV GO_MODE=production
 
