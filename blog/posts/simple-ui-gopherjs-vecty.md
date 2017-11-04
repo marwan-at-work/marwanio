@@ -43,7 +43,7 @@ import (
     "github.com/gopherjs/vecty"
 )
 
-func (mc *MyComponent) Render() *vecty.HTML {
+func (mc *MyComponent) Render() vecty.ComponentOrHTML {
     return elem.Body(
         &MyChildComponent{},
         vecty.Text("some footer text"),
@@ -53,7 +53,7 @@ func (mc *MyComponent) Render() *vecty.HTML {
 
 ### So how does the render method work? 
 
-A Component's render method must return a `*vecty.HTML`. Think of it as a component that must return a DOM element. Afterall, you're coding a web page. This is where the `elem` package comes in. It gives you access to all DOM elements, such as the `<body>` tag above.
+A Component's render method must return a `vecty.ComponentOrHTML`. Think of it as a component that must return a DOM element. Afterall, you're coding a web page. This is where the `elem` package comes in. It gives you access to all DOM elements, such as the `<body>` tag above.
 
 ### What's going on inside the `elem.Body` function? 
 
@@ -64,17 +64,15 @@ What this type says is that we can safely pass `Markup`, which we will get to in
 Finally let's look at what `MyChildComponent` renders:
 
 ``` go
-import "github.com/gopherjs/vecty/prop"
-
-func (mc *MyComponent) Render() *vecty.HTML {
+func (mc *MyComponent) Render() vecty.ComponentOrHTML {
     return elem.Div(
-        vecty.Markup(prop.Class("my-main-container")),
+        vecty.Markup(vecty.Class("my-main-container")),
         vecty.Text("Welcome to my site"),
     )
 }    
 ```
 
-Notice that the child Component is fundamentally the same as the parent Component. I just took the liberty here to introduce you to the `Markup` part aka the `vecty.Markup(prop.Class("my-main-container"))` part. The `prop` package let's you pass element attributes to your HTML such as Class, ID, href, etc. 
+Notice that the child Component is fundamentally the same as the parent Component. I just took the liberty here to introduce you to the `Markup` part aka the `vecty.Markup(vecty.Class("my-main-container"))` part. There is also a `prop` package that lets you pass element attributes to your HTML such as ID, href, etc. 
 
 ### Running On The Browser
 

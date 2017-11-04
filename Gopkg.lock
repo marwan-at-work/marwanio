@@ -23,7 +23,7 @@
   branch = "master"
   name = "github.com/gopherjs/vecty"
   packages = [".","elem","event","prop"]
-  revision = "2748005658f43a521d01478e5b44c0fc3a20c4ac"
+  revision = "d59b512a7834b3e1fb6ff4ff0e08789bf176a96d"
 
 [[projects]]
   branch = "master"

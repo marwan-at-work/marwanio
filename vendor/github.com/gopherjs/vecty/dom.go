@@ -6,12 +6,15 @@ import (
 	"github.com/gopherjs/gopherjs/js"
 )
 
+// batch renderer singleton
+var batch = &batchRenderer{idx: make(map[Component]int)}
+
 // Core implements the Context method of the Component interface, and is the
 // core/central struct which all Component implementations should embed.
 type Core struct {
 	prevRenderComponent Component
-	prevRender          *HTML
-	unmounted           bool
+	prevRender          ComponentOrHTML
+	mounted, unmounted  bool
 }
 
 // Context implements the Component interface.
@@ -26,7 +29,7 @@ func (c *Core) Context() *Core { return c }
 // 		... additional component fields (state or properties) ...
 // 	}
 //
-// 	func (c *MyComponent) Render() *vecty.HTML {
+// 	func (c *MyComponent) Render() vecty.ComponentOrHTML {
 // 		... rendering ...
 // 	}
 //
@@ -36,7 +39,7 @@ type Component interface {
 	// If Render returns nil, the component will render as nothing (in reality,
 	// a noscript tag, which has no display or action, and is compatible with
 	// Vecty's diffing algorithm).
-	Render() *HTML
+	Render() ComponentOrHTML
 
 	// Context returns the components context, which is used internally by
 	// Vecty in order to store the previous component render for diffing.
@@ -118,6 +121,7 @@ type HTML struct {
 	node jsObject
 
 	namespace, tag, text, innerHTML string
+	classes                         map[string]struct{}
 	styles, dataset                 map[string]string
 	properties, attributes          map[string]interface{}
 	eventListeners                  []*EventListener
@@ -141,6 +145,7 @@ func (h *HTML) Key() interface{} {
 	return h.key
 }
 
+// createNode creates a HTML node of the appropriate type and namespace.
 func (h *HTML) createNode() {
 	switch {
 	case h.tag != "" && h.text != "":
@@ -156,6 +161,7 @@ func (h *HTML) createNode() {
 	}
 }
 
+// reconcileText replaces the content of a text node.
 func (h *HTML) reconcileText(prev *HTML) {
 	h.node = prev.node
 
@@ -181,6 +187,24 @@ func (h *HTML) reconcile(prev *HTML) []Mounter {
 			prev = &HTML{}
 		}
 		h.createNode()
+	}
+
+	if h.node != prev.node {
+		// reconcile properties against empty prev for new nodes.
+		h.reconcileProperties(&HTML{})
+	} else {
+		h.reconcileProperties(prev)
+	}
+
+	return h.reconcileChildren(prev)
+}
+
+// reconcileProperties updates properties/attributes/etc to match the current
+// element.
+func (h *HTML) reconcileProperties(prev *HTML) {
+	// If nodes match, remove any outdated properties
+	if h.node == prev.node {
+		h.removeProperties(prev)
 	}
 
 	// Wrap event listeners
@@ -212,14 +236,6 @@ func (h *HTML) reconcile(prev *HTML) []Mounter {
 			h.node.Set(name, value)
 		}
 	}
-	new := h.node != prev.node
-	if !new {
-		for name := range prev.properties {
-			if _, ok := h.properties[name]; !ok {
-				h.node.Delete(name)
-			}
-		}
-	}
 
 	// Attributes
 	for name, value := range h.attributes {
@@ -227,11 +243,12 @@ func (h *HTML) reconcile(prev *HTML) []Mounter {
 			h.node.Call("setAttribute", name, value)
 		}
 	}
-	if !new {
-		for name := range prev.attributes {
-			if _, ok := h.attributes[name]; !ok {
-				h.node.Call("removeAttribute", name)
-			}
+
+	// Classes
+	classList := h.node.Get("classList")
+	for name := range h.classes {
+		if _, ok := prev.classes[name]; !ok {
+			classList.Call("add", name)
 		}
 	}
 
@@ -240,13 +257,6 @@ func (h *HTML) reconcile(prev *HTML) []Mounter {
 	for name, value := range h.dataset {
 		if value != prev.dataset[name] {
 			dataset.Set(name, value)
-		}
-	}
-	if !new {
-		for name := range prev.dataset {
-			if _, ok := h.dataset[name]; !ok {
-				dataset.Delete(name)
-			}
 		}
 	}
 
@@ -258,28 +268,63 @@ func (h *HTML) reconcile(prev *HTML) []Mounter {
 			style.Call("setProperty", name, value)
 		}
 	}
-	if !new {
-		for name := range prev.styles {
-			if _, ok := h.styles[name]; !ok {
-				style.Call("removeProperty", name)
-			}
-		}
-	}
 
-	if !new {
-		for _, l := range prev.eventListeners {
-			h.node.Call("removeEventListener", l.Name, l.wrapper)
-		}
-	}
+	// Event listeners
 	for _, l := range h.eventListeners {
 		h.node.Call("addEventListener", l.Name, l.wrapper)
 	}
 
+	// InnerHTML
 	if h.innerHTML != prev.innerHTML {
 		h.node.Set("innerHTML", h.innerHTML)
 	}
+}
 
-	return h.reconcileChildren(prev)
+// removeProperties removes properties/attributes/etc that are no longer
+// present on the current element.
+func (h *HTML) removeProperties(prev *HTML) {
+	// Properties
+	for name := range prev.properties {
+		if _, ok := h.properties[name]; !ok {
+			h.node.Delete(name)
+		}
+	}
+
+	// Attributes
+	for name := range prev.attributes {
+		if _, ok := h.attributes[name]; !ok {
+			h.node.Call("removeAttribute", name)
+		}
+	}
+
+	// Classes
+	classList := h.node.Get("classList")
+	for name := range prev.classes {
+		if _, ok := h.classes[name]; !ok {
+			classList.Call("remove", name)
+		}
+	}
+
+	// Dataset
+	dataset := h.node.Get("dataset")
+	for name := range prev.dataset {
+		if _, ok := h.dataset[name]; !ok {
+			dataset.Delete(name)
+		}
+	}
+
+	// Styles
+	style := h.node.Get("style")
+	for name := range prev.styles {
+		if _, ok := h.styles[name]; !ok {
+			style.Call("removeProperty", name)
+		}
+	}
+
+	// Event listeners
+	for _, l := range prev.eventListeners {
+		h.node.Call("removeEventListener", l.Name, l.wrapper)
+	}
 }
 
 // reconcileChildren reconciles children of the current HTML against a previous
@@ -708,30 +753,113 @@ func Text(text string, m ...MarkupOrChild) *HTML {
 	return h
 }
 
-// Rerender causes the body of the given component (i.e. the HTML returned by
+// Rerender causes the body of the given Component (i.e. the HTML returned by
 // the Component's Render method) to be re-rendered.
 //
-// If the component has not been rendered before, Rerender panics. If the
-// component was previously unmounted, Rerender is no-op.
+// If the Component has not been rendered before, Rerender panics. If the
+// Component was previously unmounted, Rerender is no-op.
+//
+// Rerender operates efficiently by batching renders together. As a result,
+// there is no guarantee that a calls to Rerender will map 1:1 with calls to
+// the Component's Render method. For example, two calls to Rerender may
+// result in only one call to the Component's Render method.
 func Rerender(c Component) {
 	if c == nil {
 		panic("vecty: Rerender illegally called with a nil Component argument")
 	}
-	prevRender := c.Context().prevRender
-	if prevRender == nil {
+	if c.Context().prevRender == nil {
 		panic("vecty: Rerender invoked on Component that has never been rendered")
 	}
 	if c.Context().unmounted {
 		return
 	}
-	nextRender, skip, pendingMounts := renderComponent(c, prevRender)
-	if skip {
+	batch.add(c)
+}
+
+// batchRenderer handles component re-renders by queueing and deduplicating
+// them, to be rendered on the next animation frame (via requestAnimationFrame).
+type batchRenderer struct {
+	// batch contains the list of pending components to render.
+	batch []Component
+	// idx maps components to batch indexes to allow dedup, retaining order.
+	idx map[Component]int
+	// scheduled tracks whether a batch has been scheduled for processing.
+	scheduled bool
+}
+
+// add a Component to the pending batch.
+func (b *batchRenderer) add(c Component) {
+	if i, ok := b.idx[c]; ok {
+		// Shift idx for delete.
+		for j, c := range b.batch[i+1:] {
+			b.idx[c] = j - 1
+		}
+		// Delete previously queued render.
+		copy(b.batch[i:], b.batch[i+1:])
+		b.batch[len(b.batch)-1] = nil
+		b.batch = b.batch[:len(b.batch)-1]
+	}
+	// Append and index component.
+	b.batch = append(b.batch, c)
+	b.idx[c] = len(b.batch) - 1
+	// If we're not already scheduled for a render batch, request a render on
+	// the next frame.
+	if !b.scheduled {
+		b.scheduled = true
+		requestAnimationFrame(b.render)
+	}
+}
+
+// render the pending batch.
+// TODO(pdf): Add tests for time budget and multi-pass renders.
+func (b *batchRenderer) render(startTime float64) {
+	// If the batch is empty, mark as unscheduled, and stop render cycle.
+	if len(b.batch) == 0 {
+		b.scheduled = false
 		return
 	}
-	// mountUnmount to check for node replacement
-	mountUnmount(nextRender, prevRender)
-	replaceNode(nextRender.node, prevRender.node)
-	mount(pendingMounts...)
+
+	// Drain the current batch.
+	pending := b.batch
+	b.batch = nil
+	b.idx = make(map[Component]int)
+
+	// Process batch.
+	for i, c := range pending {
+		// Skip unmounted components.
+		if c.Context().unmounted {
+			continue
+		}
+
+		// Check for remaining time budget, targeting 60fps (~16ms per frame).
+		if i > 0 {
+			elapsed := global.Get("performance").Call("now").Float() - startTime
+			budgetRemaining := (1000 / 60) - elapsed
+			avgRenderTime := elapsed / float64(i)
+			// If the budget remaining is less than 2 times the average
+			// Component render time, push the remainder of the batch to the
+			// next frame.
+			if budgetRemaining < avgRenderTime*2 {
+				b.batch = pending[i:]
+				for i, c := range b.batch {
+					b.idx[c] = i
+				}
+				break
+			}
+		}
+
+		// Perform render.
+		prevHTML := extractHTML(c.Context().prevRender)
+		nextHTML, skip, pendingMounts := renderComponent(c, c)
+		if skip {
+			continue
+		}
+		replaceNode(nextHTML.node, prevHTML.node)
+		mount(pendingMounts...)
+	}
+
+	// Schedule next frame.
+	requestAnimationFrame(b.render)
 }
 
 // extractHTML returns the *HTML from a ComponentOrHTML.
@@ -742,19 +870,20 @@ func extractHTML(e ComponentOrHTML) *HTML {
 	case *HTML:
 		return v
 	case Component:
-		return v.Context().prevRender
+		return extractHTML(v.Context().prevRender)
 	default:
 		panic("vecty: encountered invalid ComponentOrHTML " + reflect.TypeOf(e).String())
 	}
 }
 
-// sameType returns whether first and second components are of the same type
-func sameType(first, second Component) bool {
+// sameType returns whether first and second ComponentOrHTML are of the same
+// underlying type.
+func sameType(first, second ComponentOrHTML) bool {
 	return reflect.TypeOf(first) == reflect.TypeOf(second)
 }
 
-// doCopy makes a copy of the given component.
-func doCopy(c Component) Component {
+// copyComponent makes a copy of the given component.
+func copyComponent(c Component) Component {
 	if c == nil {
 		panic("vecty: cannot copy nil Component")
 	}
@@ -781,14 +910,20 @@ func doCopy(c Component) Component {
 }
 
 // copyProps copies all struct fields from src to dst that are tagged with
-// `vecty:"prop"`.
+// `vecty:"prop"`, then sets *src = *dst.
 //
-// If src and dst are different types, copyProps is no-op.
+// If src and dst are different types or non-pointers, copyProps panics.
 func copyProps(src, dst Component) {
+	if src == dst {
+		return
+	}
 	s := reflect.ValueOf(src)
 	d := reflect.ValueOf(dst)
 	if s.Type() != d.Type() {
-		return
+		panic("vecty: internal error (attempted to copy properties of incompatible structs)")
+	}
+	if s.Kind() != reflect.Ptr || d.Kind() != reflect.Ptr {
+		panic("vecty: internal error (attempted to copy properties of non-pointer)")
 	}
 	for i := 0; i < s.Elem().NumField(); i++ {
 		sf := s.Elem().Field(i)
@@ -800,6 +935,11 @@ func copyProps(src, dst Component) {
 			df.Set(sf)
 		}
 	}
+	// Effectively set *src = *dst. This allows the replacement to propagate out of
+	// the calling function, which is needed for components which themselves return
+	// components (see how renderComponent works for components that return
+	// components).
+	s.Elem().Set(d.Elem())
 }
 
 // render handles rendering the next child into HTML. If skip is returned,
@@ -814,11 +954,11 @@ func copyProps(src, dst Component) {
 // 5. nextChild == Component && prevChild == *HTML
 // 6. nextChild == Component && prevChild == nil
 //
-func render(next, prev ComponentOrHTML) (h *HTML, skip bool, pendingMounts []Mounter) {
+func render(next, prev ComponentOrHTML) (nextHTML *HTML, skip bool, pendingMounts []Mounter) {
 	switch v := next.(type) {
 	case *HTML:
 		// Cases 1, 2 and 3 above. Reconcile against the prevRender.
-		pendingMounts := v.reconcile(extractHTML(prev))
+		pendingMounts = v.reconcile(extractHTML(prev))
 		return v, false, pendingMounts
 	case Component:
 		// Cases 4, 5, and 6 above.
@@ -833,7 +973,7 @@ func render(next, prev ComponentOrHTML) (h *HTML, skip bool, pendingMounts []Mou
 // renderComponent handles rendering the given Component into *HTML. If skip ==
 // true is returned, the Component's SkipRender method has signaled the
 // component does not need to be rendered and h == nil is returned.
-func renderComponent(next Component, prev ComponentOrHTML) (h *HTML, skip bool, pendingMounts []Mounter) {
+func renderComponent(next Component, prev ComponentOrHTML) (nextHTML *HTML, skip bool, pendingMounts []Mounter) {
 	// If we had a component last render, and it's of compatible type, operate
 	// on the previous instance.
 	if prevComponent, ok := prev.(Component); ok && sameType(next, prevComponent) {
@@ -842,7 +982,6 @@ func renderComponent(next Component, prev ComponentOrHTML) (h *HTML, skip bool, 
 		// what properties the parent has specified during SkipRender/Render
 		// below.
 		copyProps(next, prevComponent)
-		next = prevComponent
 	}
 
 	// Before rendering, consult the Component's SkipRender method to see if we
@@ -861,19 +1000,40 @@ func renderComponent(next Component, prev ComponentOrHTML) (h *HTML, skip bool, 
 
 	// Render the component into HTML, handling nil renders.
 	nextRender := next.Render()
+	prevRender := next.Context().prevRender
 	if nextRender == nil {
 		// nil renders are translated into noscript tags.
 		nextRender = Tag("noscript")
 	}
 
-	// Reconcile the actual rendered HTML.
-	pendingMounts = nextRender.reconcile(extractHTML(prev))
+	switch v := nextRender.(type) {
+	case Component:
+		nextHTML, skip, pendingMounts = renderComponent(v, prevRender)
+		if skip {
+			return nextHTML, skip, pendingMounts
+		}
+	case *HTML:
+		if v == nil {
+			// nil renders are translated into noscript tags.
+			v = Tag("noscript")
+		}
+		nextHTML = v
+		// Reconcile the actual rendered HTML.
+		pendingMounts = nextHTML.reconcile(extractHTML(prev))
+	default:
+		panic("vecty: encountered invalid ComponentOrHTML " + reflect.TypeOf(v).String())
+	}
+
+	m := mountUnmount(nextRender, prevRender)
+	if m != nil {
+		pendingMounts = append(pendingMounts, m)
+	}
 
 	// Update the context to consider this render.
 	next.Context().prevRender = nextRender
-	next.Context().prevRenderComponent = doCopy(next)
+	next.Context().prevRenderComponent = copyComponent(next)
 	next.Context().unmounted = false
-	return nextRender, false, pendingMounts
+	return nextHTML, false, pendingMounts
 }
 
 // mountUnmount determines whether a mount or unmount event should occur,
@@ -881,6 +1041,15 @@ func renderComponent(next Component, prev ComponentOrHTML) (h *HTML, skip bool, 
 // or nil.
 func mountUnmount(next, prev ComponentOrHTML) Mounter {
 	if next == prev {
+		return nil
+	}
+	if !sameType(next, prev) {
+		if prev != nil {
+			unmount(prev)
+		}
+		if m, ok := next.(Mounter); ok {
+			return m
+		}
 		return nil
 	}
 	if prevHTML := extractHTML(prev); prevHTML != nil {
@@ -905,6 +1074,13 @@ func mount(pendingMounts ...Mounter) {
 		if mounter == nil {
 			continue
 		}
+		if c, ok := mounter.(Component); ok {
+			if c.Context().mounted {
+				continue
+			}
+			c.Context().mounted = true
+			c.Context().unmounted = false
+		}
 		mounter.Mount()
 	}
 }
@@ -913,7 +1089,14 @@ func mount(pendingMounts ...Mounter) {
 // that satisfy the Unmounter interface.
 func unmount(e ComponentOrHTML) {
 	if c, ok := e.(Component); ok {
+		if c.Context().unmounted {
+			return
+		}
 		c.Context().unmounted = true
+		c.Context().mounted = false
+		if prevRenderComponent, ok := c.Context().prevRender.(Component); ok {
+			unmount(prevRenderComponent)
+		}
 	}
 
 	if l, ok := e.(KeyedList); ok {
@@ -934,9 +1117,19 @@ func unmount(e ComponentOrHTML) {
 	}
 }
 
+// requestAnimationFrame calls the native JS function of the same name.
+func requestAnimationFrame(callback func(float64)) int {
+	return global.Call("requestAnimationFrame", callback).Int()
+}
+
 // RenderBody renders the given component as the document body. The given
 // Component's Render method must return a "body" element.
 func RenderBody(body Component) {
+	// block batch until we're done
+	batch.scheduled = true
+	defer func() {
+		requestAnimationFrame(batch.render)
+	}()
 	nextRender, skip, pendingMounts := renderComponent(body, nil)
 	if skip {
 		panic("vecty: RenderBody Component.SkipRender returned true")
@@ -987,6 +1180,8 @@ type jsObject interface {
 	Call(name string, args ...interface{}) jsObject
 	String() string
 	Bool() bool
+	Int() int
+	Float() float64
 }
 
 func wrapObject(j *js.Object) jsObject {
@@ -1032,6 +1227,14 @@ func (w wrappedObject) String() string {
 }
 func (w wrappedObject) Bool() bool {
 	return w.j.Bool()
+}
+
+func (w wrappedObject) Int() int {
+	return w.j.Int()
+}
+
+func (w wrappedObject) Float() float64 {
+	return w.j.Float()
 }
 
 var isTest bool

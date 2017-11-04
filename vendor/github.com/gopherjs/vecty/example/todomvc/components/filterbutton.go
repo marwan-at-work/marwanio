@@ -27,11 +27,11 @@ func (b *FilterButton) onClick(event *vecty.Event) {
 }
 
 // Render implements the vecty.Component interface.
-func (b *FilterButton) Render() *vecty.HTML {
+func (b *FilterButton) Render() vecty.ComponentOrHTML {
 	return elem.ListItem(
 		elem.Anchor(
 			vecty.Markup(
-				vecty.MarkupIf(store.Filter == b.Filter, prop.Class("selected")),
+				vecty.MarkupIf(store.Filter == b.Filter, vecty.Class("selected")),
 				prop.Href("#"),
 				event.Click(b.onClick).PreventDefault(),
 			),

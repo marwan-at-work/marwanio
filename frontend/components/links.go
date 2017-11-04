@@ -13,7 +13,7 @@ type Links struct {
 }
 
 // Render renders Footer
-func (l *Links) Render() *vecty.HTML {
+func (l *Links) Render() vecty.ComponentOrHTML {
 	return elem.Paragraph(
 		vecty.Markup(prop.ID("links-container")),
 		&Link{

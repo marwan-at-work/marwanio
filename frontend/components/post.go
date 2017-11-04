@@ -3,7 +3,6 @@ package components
 import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
-	"github.com/gopherjs/vecty/prop"
 	"github.com/marwan-at-work/marwanio/frontend/js-wrappers/marked"
 	"github.com/marwan-at-work/marwanio/frontend/stores/blogposts"
 	"github.com/marwan-at-work/vecty-router"
@@ -15,7 +14,7 @@ type PostView struct {
 }
 
 // Render returns every title
-func (pv *PostView) Render() *vecty.HTML {
+func (pv *PostView) Render() vecty.ComponentOrHTML {
 	// TODO: safely check with ok var
 	id := router.GetNamedVar(pv)["id"]
 	p, err := blogposts.GetByID(id)
@@ -27,7 +26,7 @@ func (pv *PostView) Render() *vecty.HTML {
 
 	return elem.Div(
 		vecty.Markup(
-			prop.Class("blogpost-container"),
+			vecty.Class("blogpost-container"),
 			vecty.UnsafeHTML(output),
 		),
 		pv.renderFooter(),
@@ -43,7 +42,7 @@ func (pv *PostView) renderErr() *vecty.HTML {
 func (pv *PostView) renderFooter() *vecty.HTML {
 	return elem.Div(
 		vecty.Markup(
-			prop.Class("twitter-footer"),
+			vecty.Class("twitter-footer"),
 			vecty.UnsafeHTML(
 				`<div>Follow me on <a href="https://www.twitter.com/MarwanSulaiman">Twitter</a> for updates and stuff.</div>`,
 			),

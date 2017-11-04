@@ -12,7 +12,7 @@ type Body struct {
 }
 
 // Render renders the <body> tag with the App as its children
-func (b *Body) Render() *vecty.HTML {
+func (b *Body) Render() vecty.ComponentOrHTML {
 	return elem.Body(
 		router.NewRoute("/", &MainView{}, router.NewRouteOpts{ExactMatch: true}),
 		router.NewRoute("/blog", &BlogView{}, router.NewRouteOpts{ExactMatch: true}),

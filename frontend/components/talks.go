@@ -12,25 +12,25 @@ type Talks struct {
 }
 
 // Render renders Talks component
-func (tlks *Talks) Render() *vecty.HTML {
+func (tlks *Talks) Render() vecty.ComponentOrHTML {
 	return elem.Div(
 		vecty.Markup(prop.ID("blog-container")),
 		elem.Heading1(
-			vecty.Markup(prop.Class("blog-header")),
+			vecty.Markup(vecty.Class("blog-header")),
 			vecty.Text("Talks"),
 		),
 		elem.Paragraph(
-			vecty.Markup(prop.Class("post-title")),
+			vecty.Markup(vecty.Class("post-title")),
 			elem.Anchor(
 				vecty.Markup(
-					prop.Class("post-title-text"),
+					vecty.Class("post-title-text"),
 					prop.Href("/public/bowery-golang.pdf"),
 				),
 				vecty.Text("Build Your Own Go CI Server"),
 			),
 			elem.Span(
 				vecty.Markup(
-					prop.Class("post-title-date"),
+					vecty.Class("post-title-date"),
 					vecty.UnsafeHTML(
 						"2017, Aug 3 - <a href=\"https://www.meetup.com/Bowery-Go/events/241363507\">Bowery Golang</a>",
 					),

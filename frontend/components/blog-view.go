@@ -16,7 +16,7 @@ type BlogView struct {
 }
 
 // Render renders collection of blog posts
-func (b *BlogView) Render() *vecty.HTML {
+func (b *BlogView) Render() vecty.ComponentOrHTML {
 	return elem.Div(
 		vecty.Markup(prop.ID("blog-container")),
 		b.renderHeading(),
@@ -26,7 +26,7 @@ func (b *BlogView) Render() *vecty.HTML {
 
 func (b *BlogView) renderHeading() *vecty.HTML {
 	return elem.Heading1(
-		vecty.Markup(prop.Class("blog-header")),
+		vecty.Markup(vecty.Class("blog-header")),
 		vecty.Text("Blog-ish"),
 	)
 }
@@ -43,9 +43,9 @@ func (b *BlogView) getTitles() vecty.List {
 
 func (b *BlogView) renderPostTitle(p blog.Post) vecty.ComponentOrHTML {
 	return elem.Paragraph(
-		vecty.Markup(prop.Class("post-title")),
+		vecty.Markup(vecty.Class("post-title")),
 		elem.Span(
-			vecty.Markup(prop.Class("post-title-text")),
+			vecty.Markup(vecty.Class("post-title-text")),
 			router.Link(
 				p.Link,
 				p.Title,
@@ -53,7 +53,7 @@ func (b *BlogView) renderPostTitle(p blog.Post) vecty.ComponentOrHTML {
 			),
 		),
 		elem.Span(
-			vecty.Markup(prop.Class("post-title-date")),
+			vecty.Markup(vecty.Class("post-title-date")),
 			vecty.Text(p.CreatedAt.Format("2006, Jan 02")),
 		),
 	)

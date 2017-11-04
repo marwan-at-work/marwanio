@@ -14,11 +14,11 @@ type Link struct {
 }
 
 // Render renders Link
-func (fl *Link) Render() *vecty.HTML {
+func (fl *Link) Render() vecty.ComponentOrHTML {
 	if fl.Link != "" {
 		return elem.Anchor(
 			vecty.Markup(
-				prop.Class("link footer-link"),
+				vecty.Class("link footer-link"),
 				prop.Href(fl.Link),
 			),
 			vecty.Text(fl.Name),
@@ -26,7 +26,7 @@ func (fl *Link) Render() *vecty.HTML {
 	}
 
 	return elem.Anchor(
-		vecty.Markup(prop.Class("link")),
+		vecty.Markup(vecty.Class("link")),
 		vecty.Text(fl.Name),
 	)
 }

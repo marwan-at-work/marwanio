@@ -12,7 +12,7 @@ type MainView struct {
 }
 
 // Render returns a <body> element with the entire app inside of it.
-func (pv *MainView) Render() *vecty.HTML {
+func (pv *MainView) Render() vecty.ComponentOrHTML {
 	return elem.Div(
 		vecty.Markup(prop.ID("home-view")),
 		pv.renderMainView(),
@@ -30,7 +30,7 @@ func (pv *MainView) renderMainView() *vecty.HTML {
 
 func (pv *MainView) renderFooter() *vecty.HTML {
 	return elem.Footer(
-		vecty.Markup(prop.Class("footer-container")),
+		vecty.Markup(vecty.Class("footer-container")),
 		elem.Div(
 			vecty.Text("This website is written in "),
 			elem.Anchor(
