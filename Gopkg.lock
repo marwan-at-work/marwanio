@@ -23,7 +23,7 @@
   branch = "master"
   name = "github.com/gopherjs/vecty"
   packages = [".","elem","event","prop"]
-  revision = "d59b512a7834b3e1fb6ff4ff0e08789bf176a96d"
+  revision = "1ba2b77c9d1fbf3503d3ddaa1cfc25dff4516ea3"
 
 [[projects]]
   branch = "master"
@@ -35,19 +35,19 @@
   branch = "master"
   name = "github.com/marwan-at-work/vecty-router"
   packages = ["."]
-  revision = "b18b6865f7b6188eb530649a0b8149ecfcf24316"
+  revision = "062d28bcd77d0e324e1b140bd0f4f2733dda73e4"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = ["acme","acme/autocert"]
-  revision = "9419663f5a44be8b34ca85f08abc5fe1be11f8a3"
+  revision = "9f005a07e0d31d45e6656d241bb5c0f2efd4bc94"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/net"
   packages = ["html","html/atom"]
-  revision = "a04bdaca5b32abe1c069418fb7088ae607de5bd0"
+  revision = "9dfe39835686865bff950a07b394c12a98ddc811"
 
 [[projects]]
   branch = "master"

@@ -17,7 +17,7 @@ This change allows for higher order components (components that themselves rende
 Upgrading most codebases should be trivial with a find-and-replace across all files.
 
 From your editor:
-* Find `) Render() vecty. ComponentOrHTML` and replace with `) Render() vecty.ComponentOrHTML`.
+* Find `) Render() *vecty.HTML` and replace with `) Render() vecty.ComponentOrHTML`.
 
 From the __Linux__ command line:
 ```bash
@@ -55,7 +55,7 @@ On the surface, these changes _may_ appear to be needless or simple API changes,
 `Tag`, `Text`, and `elem.Foo` constructors no longer accept markup (styles, properties, etc.) directly. You must now specify them via `vecty.Markup`. For example, this code:
 
 ```Go
-func (p *PageView) Render() vecty. ComponentOrHTML {
+func (p *PageView) Render() *vecty.HTML {
  	return elem.Body(
  		vecty.Style("background", "red"),
 	 	vecty.Text("Hello World"),
@@ -66,7 +66,7 @@ func (p *PageView) Render() vecty. ComponentOrHTML {
 Must now be written as:
 
 ```Go
-func (p *PageView) Render() vecty. ComponentOrHTML {
+func (p *PageView) Render() *vecty.HTML {
  	return elem.Body(
  		vecty.Markup(
 	 		vecty.Style("background", "red"),
@@ -81,7 +81,7 @@ func (p *PageView) Render() vecty. ComponentOrHTML {
 `If` now only accepts `ComponentOrHTML` (meaning `Component`, `*HTML`, `List` or `nil`). It does not accept markup anymore (styles, properties, etc). A new `MarkupIf` function is added for this purpose. For example you would need to make a change like this to your code:
 
 ```diff
-func (p *PageView) Render() vecty. ComponentOrHTML {
+func (p *PageView) Render() *vecty.HTML {
  	return elem.Body(
  		vecty.Markup(
 -			vecty.If(isBackgroundRed, vecty.Style("background", "red")),
