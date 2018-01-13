@@ -4,7 +4,6 @@ import (
 	"context"
 	"crypto/tls"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -32,7 +31,7 @@ func getServer(goMode string) *http.Server {
 
 	if goMode == production {
 		addTLS(srv)
-		go runRedirectServer()
+		// go http.ListenAndServe(":http", )
 	} else {
 		srv.Handler = sourcemapper.NewHandler(mux)
 	}
@@ -40,14 +39,15 @@ func getServer(goMode string) *http.Server {
 	return srv
 }
 
-func runRedirectServer() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		newURI := "https://" + r.Host + r.URL.String()
-		http.Redirect(w, r, newURI, http.StatusFound)
-	})
+// Disable until Let's Encrypt fixes (if ever) SNI
+// func runRedirectServer() {
+// 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+// 		newURI := "https://" + r.Host + r.URL.String()
+// 		http.Redirect(w, r, newURI, http.StatusFound)
+// 	})
 
-	log.Fatal(http.ListenAndServe(":80", nil))
-}
+// 	log.Fatal(http.ListenAndServe(":80", nil))
+// }
 
 func addTLS(srv *http.Server) {
 	hostPolicy := func(ctx context.Context, host string) error {
@@ -64,6 +64,8 @@ func addTLS(srv *http.Server) {
 		HostPolicy: hostPolicy,
 		Cache:      autocert.DirCache("/miocerts"),
 	}
+
+	go http.ListenAndServe(":http", m.HTTPHandler(nil))
 
 	srv.TLSConfig = &tls.Config{GetCertificate: m.GetCertificate}
 }
