@@ -12,7 +12,7 @@ func main() {
 	srv := getServer(goMode)
 
 	fmt.Println("listening on port", srv.Addr)
-	if goMode == development {
+	if goMode == development || goMode == gae {
 		log.Fatal(srv.ListenAndServe())
 	}
 
@@ -20,7 +20,7 @@ func main() {
 }
 
 func validateGoMode(goMode string) {
-	if goMode != "development" && goMode != "production" {
-		log.Fatalf("incorrect GO_MODE %v - must be production or development\n", goMode)
+	if goMode != development && goMode != production && goMode != "gae" {
+		log.Fatalf("incorrect GO_MODE %v - must be production, development, or gae.\n", goMode)
 	}
 }

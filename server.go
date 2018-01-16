@@ -15,6 +15,7 @@ import (
 const (
 	production  = "production"
 	development = "development"
+	gae         = "gae"
 )
 
 func getServer(goMode string) *http.Server {
@@ -81,6 +82,8 @@ func getMux() *http.ServeMux {
 func resolvePort(goMode string) string {
 	if goMode == development {
 		return ":3000"
+	} else if goMode == gae {
+		return ":8080"
 	}
 
 	return ":443"

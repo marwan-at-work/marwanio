@@ -42,4 +42,6 @@ COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 
 ENV GO_MODE=production
 
+EXPOSE 8080
+
 ENTRYPOINT ["/go/src/github.com/marwan-at-work/marwanio/marwanio"]
