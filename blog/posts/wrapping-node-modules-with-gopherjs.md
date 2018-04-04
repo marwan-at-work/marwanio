@@ -60,11 +60,14 @@ Notice the name of this file is `libs.js` and not `libs.inc.js` because if this 
 Add a webpack.config.js file in the same directory:
 
 ```js
+const path = require('path');
+
 module.exports = {
     entry: [
         './libs.js',
     ],
     output: {
+        path: path.resolve(__dirname),
         filename: 'libs.inc.js',
     },
 };

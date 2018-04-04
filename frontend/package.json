@@ -4,9 +4,10 @@
   "description": "portfolio and blog",
   "main": "frontend.js",
   "dependencies": {
-    "marked": "^0.3.6"
+    "marked": "^0.3.19",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.13"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
