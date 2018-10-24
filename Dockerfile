@@ -1,4 +1,4 @@
-FROM golang:1.9.1 AS builder
+FROM golang:1.11 AS builder
 
 RUN mkdir -p /go/src/github.com/marwan-at-work/marwanio/frontend && \
     go get -u github.com/gopherjs/gopherjs && \
@@ -6,7 +6,8 @@ RUN mkdir -p /go/src/github.com/marwan-at-work/marwanio/frontend && \
     apt-get update && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y nodejs && \
-    npm i -g webpack
+    npm i -g webpack && \
+    npm i -g webpack-cli
 
 COPY ./frontend/package.json /tmp/cache
 COPY ./frontend/package-lock.json /tmp/cache
@@ -19,7 +20,7 @@ COPY . /go/src/github.com/marwan-at-work/marwanio
 
 WORKDIR /go/src/github.com/marwan-at-work/marwanio
 
-RUN CGO_ENABLED=0 go build -a -ldflags '-s' && \
+RUN CGO_ENABLED=0 GO111MODULE=on go build -mod=vendor -a -ldflags '-s' && \
     cd /go/src/github.com/marwan-at-work/marwanio/frontend && \
     webpack && \
     gopherjs build github.com/marwan-at-work/marwanio/frontend -o ../public/frontend.js
@@ -39,8 +40,6 @@ COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/public /go/src/gi
 COPY --from=builder /go/src/github.com/marwan-at-work/marwanio/blog/posts /go/src/github.com/marwan-at-work/marwanio/blog/posts
 
 COPY --from=builder /etc/ssl/certs /etc/ssl/certs
-
-ENV GO_MODE=production
 
 EXPOSE 8080
 

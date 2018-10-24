@@ -3,24 +3,22 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
+	"net/http"
+
+	"github.com/marwan-at-work/sourcemapper"
+	"github.com/marwan-at-work/marwanio/router"
 )
 
 func main() {
-	goMode := os.Getenv("GO_MODE")
-	validateGoMode(goMode)
-	srv := getServer(goMode)
+	h := sourcemapper.NewHandler(getMux())
 
-	fmt.Println("listening on port", srv.Addr)
-	if goMode == development || goMode == gae {
-		log.Fatal(srv.ListenAndServe())
-	}
-
-	log.Fatal(srv.ListenAndServeTLS("", ""))
+	fmt.Println("listening on port 8080")
+	log.Fatal(http.ListenAndServe(":8080", h))
 }
 
-func validateGoMode(goMode string) {
-	if goMode != development && goMode != production && goMode != "gae" {
-		log.Fatalf("incorrect GO_MODE %v - must be production, development, or gae.\n", goMode)
-	}
+func getMux() *http.ServeMux {
+	var mux http.ServeMux
+	router.RegisterRoutes(&mux)
+
+	return &mux
 }

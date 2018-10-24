@@ -8,10 +8,6 @@ import (
 func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", home)
 
-	mux.HandleFunc("/resume", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./resume.pdf")
-	})
-
 	// This shoudl be part of the /public handler, but Chrome will not work with source maps if
 	// the imported path is /public/frontend.js :/
 	mux.HandleFunc("/frontend.js", func(w http.ResponseWriter, r *http.Request) {
