@@ -51,7 +51,7 @@ func (pv *MainView) renderFooter() *vecty.HTML {
 		elem.Div(
 			vecty.Markup(
 				vecty.UnsafeHTML(
-					"<span>It was also encrypted with love, I assume, by <a href=\"https://letsencrypt.org\">Let's Encrypt</a><span>",
+					"<span>Hosted on GAE<span>",
 				),
 			),
 		),
