@@ -1,3 +1,5 @@
+github.com/NYTimes/gziphandler v1.0.1 h1:iLrQrdwjDd52kHDA5op2UBJFjmOb9g+7scBan4RN8F0=
+github.com/NYTimes/gziphandler v1.0.1/go.mod h1:3wb06e3pkSAbeQ52E9H9iFoQsEEwGN64994WTCIhntQ=
 github.com/cathalgarvey/fmtless v0.0.0-20160509115409-5077ea938891 h1:xI+8e6zab6gwsycpo0sENGYF8DmagNYnyOxpRhnA1eE=
 github.com/cathalgarvey/fmtless v0.0.0-20160509115409-5077ea938891/go.mod h1:47i2Tts0Ndudv8RXhALRmYzK4gB8Qh39wOGy5H9FIOU=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

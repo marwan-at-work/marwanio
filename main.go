@@ -5,12 +5,17 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/marwan-at-work/sourcemapper"
+	"github.com/NYTimes/gziphandler"
 	"github.com/marwan-at-work/marwanio/router"
+	"github.com/marwan-at-work/sourcemapper"
 )
 
 func main() {
-	h := sourcemapper.NewHandler(getMux())
+	h := gziphandler.GzipHandler(
+		sourcemapper.NewHandler(
+			getMux(),
+		),
+	)
 
 	fmt.Println("listening on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", h))

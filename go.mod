@@ -1,6 +1,7 @@
 module github.com/marwan-at-work/marwanio
 
 require (
+	github.com/NYTimes/gziphandler v1.0.1
 	github.com/cathalgarvey/fmtless v0.0.0-20160509115409-5077ea938891
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1
