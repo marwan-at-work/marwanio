@@ -4,9 +4,9 @@
 
 ### *backend*
 
-`GO_MODE=development go run *.go`
+`go run *.go`
 
-or `GO_MODE=development gowatch` if you want autoreload: https://github.com/marwan-at-work/gowatch
+or `gowatch` if you want autoreload: https://github.com/marwan-at-work/gowatch
 
 ###  *frontend*
 
