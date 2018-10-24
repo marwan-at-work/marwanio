@@ -13,6 +13,8 @@
 .git
 .gitignore
 frontend
+vendor
+marwanio
 
 
 # Binaries for programs and plugins
