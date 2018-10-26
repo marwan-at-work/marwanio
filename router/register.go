@@ -2,12 +2,10 @@ package router
 
 import (
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
 // RegisterRoutes takes a mux and registers all the routes callbacks within this package
-func RegisterRoutes(mux *mux.Router) {
+func RegisterRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/", home)
 
 	// This shoudl be part of the /public handler, but Chrome will not work with source maps if
@@ -24,5 +22,5 @@ func RegisterRoutes(mux *mux.Router) {
 
 	mux.HandleFunc("/api/blog", blogHandler)
 
-	mux.HandleFunc("/pkg/{pkg}", vanityHandler)
+	mux.HandleFunc("/pkg/", vanityHandler)
 }
