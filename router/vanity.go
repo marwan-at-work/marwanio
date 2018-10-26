@@ -12,6 +12,7 @@ func vanityHandler(w http.ResponseWriter, r *http.Request) {
 	if !ok || !pkgExists(pkg) {
 		w.WriteHeader(404)
 		w.Write([]byte("Package not found\n"))
+		return
 	}
 	w.Header().Set("Cache-Control", "public")
 	vt.Execute(w, pkg)
