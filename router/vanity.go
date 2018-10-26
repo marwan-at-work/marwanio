@@ -9,11 +9,21 @@ var vt = template.Must(template.New("vanity").Parse(vt2))
 
 func vanityHandler(w http.ResponseWriter, r *http.Request) {
 	pkg, ok := getPkg(r.URL.Path)
-	if !ok {
+	if !ok || !pkgExists(pkg) {
 		w.WriteHeader(404)
 		w.Write([]byte("Package not found\n"))
 	}
 	vt.Execute(w, pkg)
+}
+
+func pkgExists(pkg string) bool {
+	resp, err := http.Get("https://api.github.com/repos/marwan-at-work/" + pkg)
+	if err != nil {
+		return false
+	}
+	resp.Body.Close()
+	// if rate limited, go with ok. TODO: use auth token or keep in mem map of my repos.
+	return resp.StatusCode == http.StatusOK || resp.StatusCode == http.StatusForbidden
 }
 
 func getPkg(s string) (string, bool) {
