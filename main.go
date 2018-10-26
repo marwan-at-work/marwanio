@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/NYTimes/gziphandler"
+	"github.com/gorilla/mux"
 	"github.com/marwan-at-work/marwanio/router"
 	"github.com/marwan-at-work/sourcemapper"
 )
@@ -21,9 +22,9 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", h))
 }
 
-func getMux() *http.ServeMux {
-	var mux http.ServeMux
-	router.RegisterRoutes(&mux)
+func getMux() http.Handler {
+	mux := mux.NewRouter()
+	router.RegisterRoutes(mux)
 
-	return &mux
+	return mux
 }
