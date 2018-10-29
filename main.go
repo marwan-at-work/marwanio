@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/NYTimes/gziphandler"
+	"github.com/gorilla/mux"
 	"github.com/marwan-at-work/marwanio/router"
 	"github.com/marwan-at-work/sourcemapper"
 )
@@ -22,8 +23,7 @@ func main() {
 }
 
 func getMux() http.Handler {
-	m := http.NewServeMux()
-	router.RegisterRoutes(m)
-
-	return m
+	r := mux.NewRouter()
+	router.RegisterRoutes(r)
+	return r
 }

@@ -6,6 +6,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1
 	github.com/gopherjs/vecty v0.0.0-20171109064333-1ba2b77c9d1f
+	github.com/gorilla/context v1.1.1 // indirect
 	github.com/gorilla/mux v1.6.2
 	github.com/marwan-at-work/sourcemapper v0.0.0-20170922160901-261492b104b3
 	github.com/marwan-at-work/vecty-router v0.0.0-20171121195844-062d28bcd77d
