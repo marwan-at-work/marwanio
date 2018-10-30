@@ -24,8 +24,8 @@ func RegisterRoutes(m *mux.Router, tok string) {
 		http.ServeFile(w, r, "./public/frontend.js.map")
 	})
 
-	m.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./public/favicon.ico")
+	m.HandleFunc("/favicon.png", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/favicon.png")
 	})
 
 	m.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("public"))))
