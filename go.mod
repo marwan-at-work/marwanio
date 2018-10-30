@@ -1,4 +1,4 @@
-module github.com/marwan-at-work/marwanio
+module marwan.io/marwanio
 
 require (
 	cloud.google.com/go v0.31.0

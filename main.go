@@ -10,9 +10,9 @@ import (
 	"github.com/NYTimes/gziphandler"
 	"github.com/gorilla/mux"
 	"github.com/hashicorp/hcl"
-	"github.com/marwan-at-work/marwanio/router"
-	"github.com/marwan-at-work/marwanio/security"
 	"github.com/marwan-at-work/sourcemapper"
+	"marwan.io/marwanio/router"
+	"marwan.io/marwanio/security"
 )
 
 func main() {

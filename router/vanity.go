@@ -12,7 +12,7 @@ func notFoundOrVanity(w http.ResponseWriter, r *http.Request) {
 	path := strings.Split(strings.TrimPrefix(r.URL.Path, "/"), "/")[0]
 
 	if !exists(path) {
-		http.Error(w, "not found", http.StatusNotFound)
+		http.ServeFile(w, r, "./public/index.html")
 		return
 	}
 

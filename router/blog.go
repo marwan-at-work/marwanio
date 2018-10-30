@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/marwan-at-work/marwanio/blog"
+	"marwan.io/marwanio/blog"
 )
 
 func blogHandler(w http.ResponseWriter, r *http.Request) {

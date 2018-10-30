@@ -4,9 +4,9 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/prop"
-	"github.com/marwan-at-work/marwanio/blog"
-	"github.com/marwan-at-work/marwanio/frontend/stores/blogposts"
 	"github.com/marwan-at-work/vecty-router"
+	"marwan.io/marwanio/blog"
+	"marwan.io/marwanio/frontend/stores/blogposts"
 )
 
 // BlogView renders the blog collection

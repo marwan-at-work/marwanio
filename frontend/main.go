@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/gopherjs/vecty"
-	"github.com/marwan-at-work/marwanio/frontend/components"
-	"github.com/marwan-at-work/marwanio/frontend/stores/blogposts"
+	"marwan.io/marwanio/frontend/components"
+	"marwan.io/marwanio/frontend/stores/blogposts"
 )
 
 func main() {
