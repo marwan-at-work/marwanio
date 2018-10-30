@@ -7,7 +7,11 @@ import (
 )
 
 // RegisterRoutes takes a mux and registers all the routes callbacks within this package
-func RegisterRoutes(m *mux.Router) {
+func RegisterRoutes(m *mux.Router, tok string) {
+	if tok != "" {
+		go runVanityUpdater(tok)
+	}
+
 	m.HandleFunc("/", home)
 
 	// This shoudl be part of the /public handler, but Chrome will not work with source maps if
