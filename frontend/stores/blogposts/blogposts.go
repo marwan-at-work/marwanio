@@ -3,9 +3,8 @@ package blogposts
 import (
 	"errors"
 
-	"honnef.co/go/js/xhr"
-
 	"github.com/cathalgarvey/fmtless/encoding/json"
+	"honnef.co/go/js/xhr"
 	"marwan.io/marwanio/blog"
 )
 

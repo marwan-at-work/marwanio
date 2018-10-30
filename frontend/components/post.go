@@ -33,10 +33,8 @@ func (pv *PostView) Render() vecty.ComponentOrHTML {
 	)
 }
 
-func (pv *PostView) renderErr() *vecty.HTML {
-	return elem.Div(
-		vecty.Text("not found"),
-	)
+func (pv *PostView) renderErr() vecty.ComponentOrHTML {
+	return &notFound{}
 }
 
 func (pv *PostView) renderFooter() *vecty.HTML {
