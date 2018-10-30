@@ -2,6 +2,7 @@ package router
 
 import (
 	"context"
+	"fmt"
 	"sync"
 	"time"
 
@@ -37,7 +38,7 @@ func exists(repo string) bool {
 	return ok
 }
 
-func getRepos(tok string) map[string]struct{} {
+func getRepos(tok string) (map[string]struct{}, error) {
 	resp := map[string]struct{}{}
 	src := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: tok},
@@ -56,7 +57,7 @@ func getRepos(tok string) map[string]struct{} {
 		var qry query
 		err := c.Query(context.Background(), &qry, vars)
 		if err != nil {
-			panic(err)
+			return resp, err
 		}
 
 		q.User.Repositories.Nodes = append(q.User.Repositories.Nodes, qry.User.Repositories.Nodes...)
@@ -74,14 +75,19 @@ func getRepos(tok string) map[string]struct{} {
 		resp[repo.Name] = struct{}{}
 	}
 
-	return resp
+	return resp, nil
 }
 
 func runVanityUpdater(tok string) {
 	ticker := time.NewTicker(10 * time.Minute)
+	var err error
 	for {
 		mu.Lock()
-		myRepos = getRepos(tok)
+		myRepos, err = getRepos(tok)
+		if err != nil {
+			// TODO: use proper logger.
+			fmt.Printf("getRepos: %v\n", err)
+		}
 		mu.Unlock()
 		<-ticker.C
 	}
