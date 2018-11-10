@@ -4,7 +4,7 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/prop"
-	"github.com/marwan-at-work/vecty-router"
+	"marwan.io/vecty-router"
 )
 
 // Links renders the Work/Blog/Resume links

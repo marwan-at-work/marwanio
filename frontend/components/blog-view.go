@@ -4,7 +4,7 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/prop"
-	"github.com/marwan-at-work/vecty-router"
+	"marwan.io/vecty-router"
 	"marwan.io/marwanio/blog"
 	"marwan.io/marwanio/frontend/stores/blogposts"
 )

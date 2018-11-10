@@ -12,7 +12,6 @@ require (
 	github.com/gorilla/mux v1.6.2
 	github.com/hashicorp/hcl v1.0.0
 	github.com/marwan-at-work/sourcemapper v0.0.0-20170922160901-261492b104b3
-	github.com/marwan-at-work/vecty-router v0.0.0-20181030040855-977ab369bd1f
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/shurcooL/githubv4 v0.0.0-20180925043049-51d7b505e2e9
 	github.com/shurcooL/go v0.0.0-20180423040247-9e1955d9fb6e // indirect
@@ -25,4 +24,5 @@ require (
 	google.golang.org/grpc v1.16.0 // indirect
 	honnef.co/go/js/util v0.0.0-20150216223935-96b8dd9d1621 // indirect
 	honnef.co/go/js/xhr v0.0.0-20150307031022-00e3346113ae
+	marwan.io/vecty-router v0.0.0-20181110152148-5075cac31a8e
 )

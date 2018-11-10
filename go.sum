@@ -25,8 +25,6 @@ github.com/googleapis/gax-go v2.0.0+incompatible h1:j0GKcs05QVmm7yesiZq2+9cxHkNK
 github.com/googleapis/gax-go v2.0.0+incompatible/go.mod h1:SFVmujtThgffbyetf+mdk2eWhX2bMyUtNHzFKcPA9HY=
 github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 h1:EGx4pi6eqNxGaHF6qqu48+N2wcFQ5qg5FXgOdqsJ5d8=
 github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1/go.mod h1:wJfORRmW1u3UXTncJ5qlYoELFm8eSnnEO6hX4iZ3EWY=
-github.com/gopherjs/vecty v0.0.0-20171109064333-1ba2b77c9d1f h1:gE2KRTwi4Y6xLdGM3dQT6siKlF/cWPwWsnFrFXS/cz0=
-github.com/gopherjs/vecty v0.0.0-20171109064333-1ba2b77c9d1f/go.mod h1:5YRDuy7i7SgM0kL+0b5oq+jfDTqPyzV3TQbcDkBvcoE=
 github.com/gopherjs/vecty v0.0.0-20180525005238-a3bd138280bf h1:J7WjKCdpxMhXDzFPP6d41YonnCnPi1JkYOFxIPoH1E0=
 github.com/gopherjs/vecty v0.0.0-20180525005238-a3bd138280bf/go.mod h1:5YRDuy7i7SgM0kL+0b5oq+jfDTqPyzV3TQbcDkBvcoE=
 github.com/gorilla/context v1.1.1 h1:AWwleXJkX/nhcU9bZSnZoi3h/qGYqQAGhq6zZe/aQW8=
@@ -39,10 +37,6 @@ github.com/hashicorp/hcl v1.0.0/go.mod h1:E5yfLk+7swimpb2L/Alb/PJmXilQ/rhwaUYs4T
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/marwan-at-work/sourcemapper v0.0.0-20170922160901-261492b104b3 h1:h0L5g3iVuguC8zUPOUX0IwoyCEqZa+jFZRdWiF+/M2o=
 github.com/marwan-at-work/sourcemapper v0.0.0-20170922160901-261492b104b3/go.mod h1:5+PtKVu2Aj55ptl4qRaMtOfNPdl+gmls6pkf/6TQ9+4=
-github.com/marwan-at-work/vecty-router v0.0.0-20171121195844-062d28bcd77d h1:LpsZNPPPiQGElgOATsGVVJrvp/KR9bxOdxrnkZB0NLw=
-github.com/marwan-at-work/vecty-router v0.0.0-20171121195844-062d28bcd77d/go.mod h1:LTs/jE6rtyjHnRCxRuNSWvq4FP7sEL6vuNje3ctvnnI=
-github.com/marwan-at-work/vecty-router v0.0.0-20181030040855-977ab369bd1f h1:JMq5fCS8fvcbXKDtZqQuhEdJRy/oC5ZilePGAKLKUIA=
-github.com/marwan-at-work/vecty-router v0.0.0-20181030040855-977ab369bd1f/go.mod h1:1ZwyldAlTDU9mGM9EW7EQACnmyYhi6IKVUyiZnT/SJQ=
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
 github.com/openzipkin/zipkin-go v0.1.1/go.mod h1:NtoC/o8u3JlF1lSlyPNswIbeQH9bJTmOf0Erfk+hxe8=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
@@ -96,3 +90,5 @@ honnef.co/go/js/util v0.0.0-20150216223935-96b8dd9d1621/go.mod h1:WrAIh8rWfzvMdL
 honnef.co/go/js/xhr v0.0.0-20150307031022-00e3346113ae h1:2dIKMawnBWvHzZrS8STyu/KdhYIOpnKQpp1WZm+K7TE=
 honnef.co/go/js/xhr v0.0.0-20150307031022-00e3346113ae/go.mod h1:QwoYXdHZpuR080H32s5jqyk7zh/k/U9bDFg2g8OMmOM=
 honnef.co/go/tools v0.0.0-20180728063816-88497007e858/go.mod h1:rf3lG4BRIbNafJWhAfAdb/ePZxsR/4RtNHQocxwk9r4=
+marwan.io/vecty-router v0.0.0-20181110152148-5075cac31a8e h1:nw21MX0cZlXa0VxhBDwGNS+cNN1mI1gypBxo60saK5g=
+marwan.io/vecty-router v0.0.0-20181110152148-5075cac31a8e/go.mod h1:L1DyEpOONgw6nkWLXnUp2F4+dwbvgc0kWVvBw+7lYtw=

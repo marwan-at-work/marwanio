@@ -3,9 +3,9 @@ package components
 import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
-	"github.com/marwan-at-work/vecty-router"
 	"marwan.io/marwanio/frontend/js-wrappers/marked"
 	"marwan.io/marwanio/frontend/stores/blogposts"
+	"marwan.io/vecty-router"
 )
 
 // PostView represents a post
