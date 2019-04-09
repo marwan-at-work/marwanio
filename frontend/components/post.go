@@ -5,7 +5,7 @@ import (
 	"github.com/gopherjs/vecty/elem"
 	"marwan.io/marwanio/frontend/js-wrappers/marked"
 	"marwan.io/marwanio/frontend/stores/blogposts"
-	"marwan.io/vecty-router"
+	router "marwan.io/vecty-router"
 )
 
 // PostView represents a post
@@ -42,7 +42,7 @@ func (pv *PostView) renderFooter() *vecty.HTML {
 		vecty.Markup(
 			vecty.Class("twitter-footer"),
 			vecty.UnsafeHTML(
-				`<div>Follow me on <a href="https://www.twitter.com/MarwanSulaiman">Twitter</a> for updates and stuff.</div>`,
+				`<div>Follow me on <a href="https://www.twitter.com/MarwanSulaiman">Twitter</a> for questions and feedback.</div>`,
 			),
 		),
 	)

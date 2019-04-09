@@ -164,3 +164,7 @@ based on dark.css by Ivan Sagalaev
   padding-top: 20px;
   border-top: 1px dashed darkgrey;
 }
+
+img {
+  width: 100%;
+}

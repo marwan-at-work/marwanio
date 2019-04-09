@@ -13,8 +13,9 @@
 .git
 .gitignore
 frontend
-vendor
 marwanio
+go.mod
+go.sum
 service_account.json
 
 # Binaries for programs and plugins
