@@ -1,8 +1,9 @@
 pre {
   padding: 5px 10px 15px 5px;
-    background: rgb(63,63,63);
-   color: white;
-   border-radius: 3px;
+  background: rgb(63,63,63);
+  color: white;
+  border-radius: 3px;
+  overflow: scroll;
 }
 
 body {
