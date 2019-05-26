@@ -20,6 +20,13 @@ func (tlks *Talks) Render() vecty.ComponentOrHTML {
 			vecty.Markup(vecty.Class("blog-header")),
 			vecty.Text("Talks"),
 			getTalk(
+				"Go Modules and The Athens Project",
+				"https://changelog.com/gotime/86",
+				"2019, May 22",
+				"GoTime Podcast",
+				"https://changelog.com/gotime",
+			),
+			getTalk(
 				"Handling Go Errors (At The New York Times)",
 				"https://slides.com/marwansameer/handling-go-errors#/",
 				"2018, Sep 28",

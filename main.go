@@ -23,8 +23,12 @@ func main() {
 		),
 	)
 
-	fmt.Println("listening on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", h))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	fmt.Println("listening on port", port)
+	log.Fatal(http.ListenAndServe(":"+port, h))
 }
 
 func getToken() string {
