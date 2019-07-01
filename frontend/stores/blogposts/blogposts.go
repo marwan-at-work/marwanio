@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/cathalgarvey/fmtless/encoding/json"
-	"honnef.co/go/js/xhr"
 	"marwan.io/marwanio/blog"
+	fetch "marwan.io/wasm-fetch"
 )
 
 var posts = []blog.Post{}
@@ -15,11 +15,11 @@ var ErrNotFound = errors.New("blog post was not found")
 
 // Fetch will populate all blog posts from the server.
 func Fetch() error {
-	bts, err := xhr.Send("GET", "/api/blog", nil)
+	resp, err := fetch.Fetch("/api/blog", &fetch.Opts{Method: "GET"})
 	if err != nil {
 		return err
 	}
-
+	bts := resp.Body
 	return json.Unmarshal(bts, &posts)
 }
 

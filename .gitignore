@@ -8,3 +8,4 @@ node_modules
 vendor
 service_account.json
 config.hcl
+frontend.wasm

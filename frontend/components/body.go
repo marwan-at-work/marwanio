@@ -4,7 +4,7 @@ import (
 	"github.com/gopherjs/vecty"
 	"github.com/gopherjs/vecty/elem"
 	"github.com/gopherjs/vecty/prop"
-	"marwan.io/vecty-router"
+	router "marwan.io/vecty-router"
 )
 
 // Body renders the <body> tag

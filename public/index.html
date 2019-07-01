@@ -9,7 +9,9 @@
   <script src="/public/highlight.pack.js"></script>
   <link rel="stylesheet" href="/public/normalize.css">
   <link rel="stylesheet" href="/public/main.css">
-  <script src="/frontend.js"></script>
+  <script src="/public/libs.inc.js"></script>
+  <script src="/public/wasm_exec.js"></script>
+  <!-- <script src="/frontend.js"></script> -->
   <script>
     window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
     ga('create', 'UA-135602056-1', 'auto');
@@ -21,7 +23,18 @@
   </script>
   <script async src="https://www.google-analytics.com/analytics.js"></script>
   <script async src="/public/autotrack.js"></script>
-
+  <script>
+    if (!WebAssembly.instantiateStreaming) { // polyfill
+      WebAssembly.instantiateStreaming = async (resp, importObject) => {
+        const source = await (await resp).arrayBuffer();
+        return await WebAssembly.instantiate(source, importObject);
+      };
+    }
+    const go = new Go();
+    WebAssembly.instantiateStreaming(fetch("/public/frontend.wasm"), go.importObject).then((result) => {
+      go.run(result.instance);
+    });
+  </script>
 </head>
 
 <body></body>
