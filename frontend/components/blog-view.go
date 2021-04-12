@@ -1,12 +1,12 @@
 package components
 
 import (
-	"github.com/gopherjs/vecty"
-	"github.com/gopherjs/vecty/elem"
-	"github.com/gopherjs/vecty/prop"
-	"marwan.io/vecty-router"
-	"marwan.io/marwanio/blog"
+	"github.com/hexops/vecty"
+	"github.com/hexops/vecty/elem"
+	"github.com/hexops/vecty/prop"
+	"marwan.io/marwanio/frontend/blog"
 	"marwan.io/marwanio/frontend/stores/blogposts"
+	"marwan.io/vecty-router"
 )
 
 // BlogView renders the blog collection

@@ -1,10 +1,11 @@
 package components
 
 import (
-	fmt "github.com/cathalgarvey/fmtless"
-	"github.com/gopherjs/vecty"
-	"github.com/gopherjs/vecty/elem"
-	"github.com/gopherjs/vecty/prop"
+	"fmt"
+	// fmt "github.com/cathalgarvey/fmtless"
+	"github.com/hexops/vecty"
+	"github.com/hexops/vecty/elem"
+	"github.com/hexops/vecty/prop"
 )
 
 // Talks renders index of talks I've given

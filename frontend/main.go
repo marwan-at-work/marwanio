@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/gopherjs/vecty"
+	"github.com/hexops/vecty"
 	"marwan.io/marwanio/frontend/components"
 	"marwan.io/marwanio/frontend/stores/blogposts"
 )

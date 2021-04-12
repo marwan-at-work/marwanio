@@ -1,8 +1,8 @@
 package components
 
 import (
-	"github.com/gopherjs/vecty"
-	"github.com/gopherjs/vecty/elem"
+	"github.com/hexops/vecty"
+	"github.com/hexops/vecty/elem"
 	"marwan.io/marwanio/frontend/js-wrappers/marked"
 	"marwan.io/marwanio/frontend/stores/blogposts"
 	router "marwan.io/vecty-router"

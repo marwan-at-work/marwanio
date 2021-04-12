@@ -1,7 +1,6 @@
 FROM golang:1.11 AS builder
 
 RUN mkdir -p /go/src/github.com/marwan-at-work/marwanio/frontend && \
-    go get -u github.com/gopherjs/gopherjs && \
     mkdir -p /tmp/cache && \
     apt-get update && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
@@ -23,7 +22,7 @@ WORKDIR /go/src/github.com/marwan-at-work/marwanio
 RUN CGO_ENABLED=0 GO111MODULE=on go build -mod=vendor -a -ldflags '-s' && \
     cd /go/src/github.com/marwan-at-work/marwanio/frontend && \
     webpack && \
-    gopherjs build github.com/marwan-at-work/marwanio/frontend -o ../public/frontend.js
+    GOARCH=wasm GOOS=js go build github.com/marwan-at-work/marwanio/frontend -o ../public/frontend.js
 
 FROM busybox
 
