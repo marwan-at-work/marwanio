@@ -4,7 +4,7 @@
   "description": "portfolio and blog",
   "main": "frontend.js",
   "dependencies": {
-    "marked": "^0.3.19",
+    "marked": "^4.0.10",
     "webpack": "^4.5.0"
   },
   "scripts": {
