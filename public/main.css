@@ -1,171 +1,104 @@
+body {
+  font-family: "Work Sans", sans-serif;
+  background-color: antiquewhite;
+}
+
+#home {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+#home-links a {
+  margin-left: 20px;
+}
+
+#home-links a:first-child {
+  margin-left: 0px;
+}
+
+body {
+  font-family: "Work Sans", sans-serif;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-links a {
+  margin-left: 20px;
+}
+
+.home-links a:first-child {
+  margin-left: 0px;
+}
+
+.post {
+  width: 50vw;
+  margin: 40px auto;
+}
+
+img {
+  width: 100%;
+}
+
 pre {
   padding: 5px 10px 15px 5px;
-  background: rgb(63,63,63);
+  background: rgb(63, 63, 63);
   color: white;
   border-radius: 3px;
   overflow: scroll;
 }
 
-body {
-    /*font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
-    /*font-family: 'Bellefair', serif;*/
-    font-family: 'Work Sans', sans-serif;
+.ln {
+  user-select: none;
 }
 
-#home-view {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    height: 100vh;
+.list-page {
+  width: 80vw;
+  margin: 40px auto;
 }
 
-#home-top {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    text-align: center;
+.list-page h1 {
+  color: #b3b3b3;
+  margin-bottom: 40px;
 }
 
-#links-container {
-    display: flex;
-    justify-content: center;
+.list-page-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
 }
 
-.link {
-    margin: 0 20px;
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-
-.footer-container {
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    text-align: center;
-    padding-bottom: 5px;
-    font-size: 12px;
-}
-
-#blog-container {
-    width: 80%;
-    margin: 40px auto;
-}
-
-.blog-header {
-    color: #b3b3b3;
-    margin-bottom: 40px;
-}
-
-.post-title {
-    display: grid;
-}
-
-.post-title-date {
-    color: #6b6b6b;
-    font-size: 12px;
-}
-
-.post-title-text {
-    font-size: 18px;
-    margin-bottom: 5px;
-    font-style: italic;
-}
-
-.post-title-text:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
-
-.blogpost-container {
-    width: 50vw;
-    margin: 40px auto;
-}
-/*
-
-Zenburn style from voldmar.ru (c) Vladimir Epifanov <voldmar@voldmar.ru>
-based on dark.css by Ivan Sagalaev
-
-*/
-
-.hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
-  background: #3f3f3f;
-  color: #dcdcdc;
-}
-
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-tag {
-  color: #e3ceab;
-}
-
-.hljs-template-tag {
-  color: #dcdcdc;
-}
-
-.hljs-number {
-  color: #8cd0d3;
-}
-
-.hljs-variable,
-.hljs-template-variable,
-.hljs-attribute {
-  color: #efdcbc;
-}
-
-.hljs-literal {
-  color: #efefaf;
-}
-
-.hljs-subst {
-  color: #8f8f8f;
-}
-
-.hljs-title,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-section,
-.hljs-type {
-  color: #efef8f;
-}
-
-.hljs-symbol,
-.hljs-bullet,
-.hljs-link {
-  color: #dca3a3;
-}
-
-.hljs-deletion,
-.hljs-string,
-.hljs-built_in,
-.hljs-builtin-name {
-  color: #cc9393;
-}
-
-.hljs-addition,
-.hljs-comment,
-.hljs-quote,
-.hljs-meta {
-  color: #7f9f7f;
-}
-
-
-.hljs-emphasis {
+.list-page-item .title {
+  font-size: 18px;
+  margin-bottom: 5px;
   font-style: italic;
-}
-
-.hljs-strong {
   font-weight: bold;
 }
 
-.twitter-footer {
-  padding-top: 20px;
-  border-top: 1px dashed darkgrey;
+.list-page-item .subtitle {
+  color: #6b6b6b;
+  font-size: 12px;
 }
 
-img {
-  width: 100%;
+#talks .list-page-item {
+  margin-bottom: 32px;
+}
+
+#talks h1 {
+  margin-bottom: 32px;
+}
+
+.notfound {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 }

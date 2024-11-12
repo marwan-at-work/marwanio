@@ -1,4 +1,4 @@
-package router
+package main
 
 import (
 	"html/template"
@@ -8,13 +8,8 @@ import (
 
 var vanity = template.Must(template.New("vanity").Parse(vanityTemplate))
 
-func notFoundOrVanity(w http.ResponseWriter, r *http.Request) {
+func notFoundVanity(w http.ResponseWriter, r *http.Request) {
 	path := strings.Split(strings.TrimPrefix(r.URL.Path, "/"), "/")[0]
-
-	if !exists(path) {
-		http.ServeFile(w, r, "./public/index.html")
-		return
-	}
 
 	w.Header().Set("Cache-Control", "public")
 	vanity.Execute(w, path)

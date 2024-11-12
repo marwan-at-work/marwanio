@@ -1,58 +1,86 @@
 package main
 
 import (
+	"bytes"
+	"context"
+	"embed"
+	"flag"
 	"fmt"
-	"io/ioutil"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
+	"time"
 
-	"github.com/NYTimes/gziphandler"
-	"github.com/gorilla/mux"
-	"github.com/hashicorp/hcl"
-	"github.com/marwan-at-work/sourcemapper"
-	"marwan.io/marwanio/router"
-	"marwan.io/marwanio/security"
+	"github.com/yuin/goldmark"
+	"marwan.io/muxw"
+	"marwan.io/serverctx"
 )
 
+//go:embed public
+var public embed.FS
+
+var dev = flag.Bool("dev", false, "run in developer mode")
+
 func main() {
-	githubToken := getToken()
-	h := gziphandler.GzipHandler(
-		sourcemapper.NewHandler(
-			getMux(githubToken),
-		),
-	)
+	flag.Parse()
 
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-	fmt.Println("listening on port", port)
-	log.Fatal(http.ListenAndServe(":"+port, h))
-}
+	r := muxw.NewRouter()
 
-func getToken() string {
-	bts, err := ioutil.ReadFile("./config.hcl")
-	if os.IsNotExist(err) {
-		fmt.Println("vanity imports disabled")
-		return ""
-	} else if err != nil {
-		log.Fatal(err)
+	var public fs.FS = public
+	if *dev {
+		public = os.DirFS("public")
+	} else {
+		var err error
+		public, err = fs.Sub(public, "public")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
-	var cfg security.GCPConfig
-	err = hcl.Unmarshal(bts, &cfg)
+
+	r.Get("/", serveFile(public, "index.html"))
+	r.Get("/talks", serveFile(public, "talks.html"))
+	r.Get("/blog", serveFile(public, "blogs.html"))
+	r.Get("/blog/{post}", serveBlogPost(public))
+	r.Mount("/public", http.StripPrefix("/public", http.FileServerFS(public)))
+	r.SetNotFoundHandler(notFoundVanity)
+
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
+	err := serverctx.Run(ctx, &http.Server{
+		Addr:    ":3091",
+		Handler: r,
+	}, 5*time.Second)
 	if err != nil {
 		log.Fatal(err)
 	}
-	tok, err := security.GithubToken(&cfg)
-	if err != nil {
-		log.Fatal(err)
-	}
-	return tok
 }
 
-func getMux(tok string) http.Handler {
-	r := mux.NewRouter()
-	router.RegisterRoutes(r, tok)
-	return r
+func serveFile(public fs.FS, file string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFileFS(w, r, public, file)
+	}
+}
+
+func serveBlogPost(public fs.FS) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		file, err := fs.ReadFile(public, "blog/"+r.PathValue("post")+".md")
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		var buf bytes.Buffer
+		err = goldmark.Convert(file, &buf)
+		if err != nil {
+			fmt.Println(err)
+		}
+		post, err := fs.ReadFile(public, "blogpost.html")
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		resp := fmt.Sprintf(string(post), buf.String())
+		fmt.Fprintln(w, resp)
+	}
 }
