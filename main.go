@@ -42,6 +42,7 @@ func main() {
 	r.Get("/", serveFile(public, "index.html"))
 	r.Get("/talks", serveFile(public, "talks.html"))
 	r.Get("/blog", serveFile(public, "blogs.html"))
+	r.Get("/favicon.ico", serveFile(public, "favicon.ico"))
 	r.Get("/blog/{post}", serveBlogPost(public))
 	r.Mount("/public", http.StripPrefix("/public", http.FileServerFS(public)))
 	r.SetNotFoundHandler(notFoundVanity)
