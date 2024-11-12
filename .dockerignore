@@ -6,3 +6,4 @@ frontend.js.map
 resume.pdf
 libs.inc.js
 node_modules
+deploy.sh
